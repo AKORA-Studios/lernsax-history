@@ -31,6 +31,14 @@ RUN addgroup -g 1001 -S nodejs\
     && adduser -S nextjs -u 1001 
 #    && chsh -s /usr/sbin/nologin root
 
+# Install git as dependency
+RUN apk fix
+RUN apk --update add git git-lfs less openssh && \
+    git lfs install && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm /var/cache/apk/*
+
+
 # You only need to copy next.config.js if you are NOT using the default configuration
 COPY --from=builder /app/tsconfig.json ./tsconfig.json
 COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json

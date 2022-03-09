@@ -1,6 +1,6 @@
 import { config as loadConfig } from 'dotenv';
 import md5 from 'md5';
-import { writeFileSync } from 'node:fs';
+import { writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 //Load enviroment variables
@@ -20,7 +20,7 @@ if (!config.USERNAME) throw new Error('Username missing');
 if (!config.PASSWORD) throw new Error('Username missing');
 if (!config.WEBDAV_URL) throw new Error('WebDav URL missing');
 
-const hash = md5(config.WEBDAV_URL + config.USERNAME + config.PASSWORD);
+export default config;
 
 //persistent Data
 import rawData from '../data.json';
@@ -28,16 +28,23 @@ export const data = rawData as any as {
     hash?: string;
     lastRun?: Date;
 };
+
+const hash = md5(config.WEBDAV_URL + config.USERNAME + config.PASSWORD);
+
 data.lastRun ??= new Date(0);
+data.lastRun = new Date(data.lastRun);
 data.hash ??= hash;
 
 if (data.hash !== hash) throw new Error('This data file belongs to a diffrent configuration');
 
-writeFileSync(join(__dirname, '../data.json'), JSON.stringify(data, null, 4));
-
 export const scriptStart = new Date();
-export const lastRun = data.lastRun;
+export const lastRun = new Date(data.lastRun.getTime());
 
-export default config;
+export function saveData() {
+    data.lastRun = scriptStart;
+
+    return writeFile(join(__dirname, '../data.json'), JSON.stringify(data, null, 4));
+}
+saveData();
 
 console.log('✅ - Loaded config');
