@@ -22,7 +22,7 @@ RUN tsc
 
 
 # Production image, copy all the files and run next
-FROM node:16-alpine AS runner
+FROM node:16-bullseye-slim AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
@@ -32,11 +32,15 @@ RUN addgroup -g 1001 -S nodejs\
 #    && chsh -s /usr/sbin/nologin root
 
 # Install git as dependency
-RUN apk fix
-RUN apk --update add git git-lfs less openssh && \
-    git lfs install && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm /var/cache/apk/*
+RUN apt-get -qq update && apt-get -y install --no-install-recommends \
+    git=2.30.2 \
+    davfs2=1.6.0 \
+    && rm -rf /var/lib/apt/lists/*
+
+
+
+## MOunt WebDAV https://wiki.archlinux.org/title/Davfs2
+
 
 
 # You only need to copy next.config.js if you are NOT using the default configuration

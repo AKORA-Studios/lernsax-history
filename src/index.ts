@@ -2,7 +2,7 @@ import config, { saveData } from './config'; //Load env variables
 import './files';
 
 import { createClient } from 'webdav';
-import { checkRepo } from './files';
+import { checkRepo, syncWebDAV } from './files';
 import { push } from './git';
 
 export const client = createClient(config.WEBDAV_URL, {
@@ -19,6 +19,8 @@ async function main() {
     console.log('✅ - Connected Client');
 
     await checkRepo();
+
+    await syncWebDAV();
 }
 
 export async function stop(err?: Error) {

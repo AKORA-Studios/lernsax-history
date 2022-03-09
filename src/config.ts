@@ -26,9 +26,17 @@ export default config;
 
 //persistent Data
 import rawData from '../data.json';
+
+type File = string;
+type Dir = { name: string; files: FileTree | null };
+type Entry = File | Dir;
+export type FileTree = Entry[];
+
 export const data = rawData as any as {
-    hash?: string;
-    lastRun?: Date;
+    hash: string;
+    lastRun: Date;
+    /** FileTree */
+    filetree: FileTree;
 };
 
 const hash = md5(config.WEBDAV_URL + config.USERNAME + config.PASSWORD);
@@ -36,6 +44,7 @@ const hash = md5(config.WEBDAV_URL + config.USERNAME + config.PASSWORD);
 data.lastRun ??= new Date(0);
 data.lastRun = new Date(data.lastRun);
 data.hash ??= hash;
+data.filetree ??= [];
 
 if (data.hash !== hash) throw new Error('This data file belongs to a diffrent configuration');
 
