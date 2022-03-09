@@ -1,6 +1,6 @@
-import config, { data, saveData } from './config'; //Load env variables
+import config, { saveData } from './config'; //Load env variables
 
-import { AuthType, createClient } from 'webdav';
+import { createClient } from 'webdav';
 
 export const client = createClient(config.WEBDAV_URL, {
     username: config.USERNAME,

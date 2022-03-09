@@ -12,6 +12,7 @@
   "dependencies": {
     "dotenv": "^16.0.0",
     "md5": "^2.3.0",
+    "simple-git": "^3.2.6",
     "webdav": "^4.8.0"
   },
   "devDependencies": {

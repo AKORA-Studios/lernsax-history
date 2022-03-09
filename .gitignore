@@ -5,3 +5,4 @@
 **/local.env
 **/test
 data.json
+files/**/*
