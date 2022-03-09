@@ -1,7 +1,11 @@
+import config from './config'; //Load env variables
+
 import { AuthType, createClient } from 'webdav';
 
-const client = createClient('https://some-server.org', {
+export const client = createClient(config.WEBDAV_URL, {
     authType: AuthType.Digest,
-    username: 'user',
-    password: 'pass',
+    username: config.USERNAME,
+    password: config.PASSWORD,
 });
+
+export default client;
