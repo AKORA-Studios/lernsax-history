@@ -35,7 +35,7 @@ RUN git config --global user.email "git-history@lernsax.de" \
     && git config --global user.name "Git History Bot"
 
 # Modules
-COPY --from=deps --chown=nextjs:nodejs /app/node_modules ./node_modules
+COPY --from=deps /app/node_modules ./node_modules
 
 # Copy all files -> KEEP .dockerignore UP TO DATE
 COPY . .
