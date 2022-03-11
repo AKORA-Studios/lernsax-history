@@ -28,8 +28,9 @@ RUN apt-get -qq update && apt-get -y install --no-install-recommends \
 
 
 ## MOunt WebDAV https://wiki.archlinux.org/title/Davfs2
-RUN touch /etc/davfs2/davfs2.conf
-
+RUN echo "$LERNSAX_WEBDAV_URL $LERNSAX_USERNAME $LERNSAX_PASSWORD" > /etc/davfs2/secrets \
+    && chmod 600 /etc/davfs2/secrets \
+    && chown root:root /etc/davfs2/secrets
 
 # Build
 COPY --from=deps /app/node_modules ./node_modules

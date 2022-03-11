@@ -1,0 +1,6 @@
+services:
+  app:
+    build: .
+    container_name: lernsax_history
+    env_file:
+      - .env
