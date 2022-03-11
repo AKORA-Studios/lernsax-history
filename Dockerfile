@@ -23,9 +23,9 @@ RUN addgroup -g 1001 -S nodejs \
 RUN apk fix
 RUN apk --no-cache add \
     git=2.35.1-r0 \
-    git-lfs=3.1.2-r0 \
+    git-lfs=3.0.2-r0 \
     less=590-r0 \
-    openssh=8.8_p1-r4\
+    openssh=8.8_p1-r1 \
     rsync=3.2.3-r5 \
     && git lfs install
 
