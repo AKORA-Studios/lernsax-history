@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { gitPath } from './git';
 
 export const filesPath = join(__dirname, '../files');
+console.log(filesPath, gitPath);
 
 if (!existsSync(filesPath))
     try {
@@ -16,7 +17,7 @@ export function copyWebDAV() {
         '-rpt',
         '--max-size=2m',
         '--cvs-exclude', //ignores all files CVS ignores
-        filesPath,
+        filesPath + '/', //Doesnt create a "files" fodler in the git folder
         gitPath,
     ]);
     console.log(execSync('ls -lah ' + gitPath).toString());
