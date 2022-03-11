@@ -20,7 +20,7 @@ RUN addgroup --system --gid 1001 nodejs\
 #    && chsh -s /usr/sbin/nologin root
 
 # Install git as dependency
-RUN apt-get -qq update && apt-get -y install --no-install-recommends \
+RUN apt-get -qq update && apt-get -y -qq install --no-install-recommends \
     git \
     davfs2 \
     && rm -rf /var/lib/apt/lists/*
