@@ -15,7 +15,9 @@ export function copyWebDAV() {
     const res = execFileSync('rsync', [
         '-rpt',
         '--max-size=2m',
-        '--exclude-from=' + join(gitPath, '.gitignore'),
+        '--exclude=*',
+        '--include-from=' + join(gitPath, '.include'),
+        '--exclude-from=' + join(gitPath, '.exclude'),
         filesPath,
         gitPath,
     ]);
