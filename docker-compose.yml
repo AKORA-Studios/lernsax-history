@@ -11,5 +11,11 @@ services:
       - .env
     volumes:
       - ./files:/app/files:ro
+      - lernsax_git:/app/git
     networks:
       - lernsax
+
+volumes:
+  lernsax_git:
+    name: lernsax_git
+    external: true
