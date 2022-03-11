@@ -5,7 +5,10 @@ import client from '.';
 import { data, FileTree, saveData } from './config';
 
 export const filesPath = join(__dirname, '../files');
-if (!existsSync(filesPath)) mkdirSync(filesPath);
+if (!existsSync(filesPath))
+    try {
+        mkdirSync(filesPath);
+    } catch (e) {}
 
 async function traverse(path: string): Promise<[FileTree, boolean]> {
     let tree: FileTree = [];
