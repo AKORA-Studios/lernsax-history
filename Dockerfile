@@ -25,6 +25,9 @@ RUN apt-get -qq update && apt-get -y install --no-install-recommends \
     davfs2 \
     && rm -rf /var/lib/apt/lists/*
 
+ARG LERNSAX_WEBDAV_URL
+ARG LERNSAX_USERNAME
+ARG LERNSAX_PASSWORD
 
 
 ## MOunt WebDAV https://wiki.archlinux.org/title/Davfs2
