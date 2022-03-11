@@ -41,6 +41,7 @@ COPY ./src ./src
 
 RUN mkdir /app/files
 VOLUME [ "/app/files" ]
+VOLUME [ "/app/git" ]
 
 # Show current folder structure in logs
 #RUN ls -al -R -I "node_modules" -I "maps"  -I "dists"

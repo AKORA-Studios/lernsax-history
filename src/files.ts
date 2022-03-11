@@ -8,17 +8,6 @@ import { initRepo, pull } from './git';
 
 export const filesPath = join(__dirname, '../files');
 
-export async function checkRepo() {
-    if (!existsSync(filesPath)) {
-        mkdirSync(filesPath);
-        await initRepo();
-    }
-
-    await pull();
-
-    console.log('✅ - Repo up to date');
-}
-
 async function traverse(path: string): Promise<[FileTree, boolean]> {
     let tree: FileTree = [];
     let full = true;
@@ -39,6 +28,8 @@ async function traverse(path: string): Promise<[FileTree, boolean]> {
 }
 
 export async function syncWebDAV() {
+    console.log();
+    return;
     //Create FileTree
     let completed = false;
     while (!completed) {

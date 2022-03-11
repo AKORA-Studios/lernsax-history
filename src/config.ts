@@ -16,6 +16,7 @@ export const config = {
     GIT_USER: process.env.GIT_USER!,
     GIT_PASSWORD: process.env.GIT_PASSWORD!,
     GIT_REPO: process.env.GIT_REPO!,
+    GIT_HOST: process.env.GIT_HOST!,
     DEV: isDev,
 };
 

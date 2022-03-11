@@ -1,13 +1,19 @@
 import simpleGit from 'simple-git';
 import config from './config';
-import { filesPath } from './files';
-import { basename } from 'node:path';
+import { basename, join } from 'node:path';
 
-const git = simpleGit(filesPath);
-const GIT_URL = `https://${config.GIT_USER}:${config.GIT_PASSWORD}@github.com/${config.GIT_REPO}`;
+export const gitPath = join(__dirname, '../git');
 
-export function initRepo() {
-    return git.clone(GIT_URL, filesPath);
+const git = simpleGit(gitPath);
+const GIT_URL = `https://${config.GIT_USER}:${config.GIT_PASSWORD}@${config.GIT_HOST}/${config.GIT_REPO}`;
+
+export async function initRepo() {
+    try {
+        await pull();
+    } catch (e) {
+        //Repo doesnt exist
+        await git.clone(GIT_URL, gitPath);
+    }
 }
 
 export function pull() {
