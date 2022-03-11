@@ -1,6 +1,7 @@
 networks:
     lernsax:
       name: lernsax
+      external: true
 
 services:
   app:
