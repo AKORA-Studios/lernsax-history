@@ -10,7 +10,7 @@ RUN npm ci -q
 
 
 # Production image, copy all the files and run next
-FROM node:16-bullseye-slim AS runner
+FROM node:16-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
@@ -20,20 +20,9 @@ RUN addgroup --system --gid 1001 nodejs\
 #    && chsh -s /usr/sbin/nologin root
 
 # Install git as dependency
-RUN apt-get -qq update && apt-get -y -qq --force-yes install --no-install-recommends \
+RUN apt-get -qq update && apt-get -y -qq install --no-install-recommends \
     git \
-    davfs2 \
     && rm -rf /var/lib/apt/lists/*
-
-ARG LERNSAX_WEBDAV_URL
-ARG LERNSAX_USERNAME
-ARG LERNSAX_PASSWORD
-
-
-## MOunt WebDAV https://wiki.archlinux.org/title/Davfs2
-RUN echo "$LERNSAX_WEBDAV_URL $LERNSAX_USERNAME $LERNSAX_PASSWORD" > /etc/davfs2/secrets \
-    && chmod 600 /etc/davfs2/secrets \
-    && chown root:root /etc/davfs2/secrets
 
 # Build
 COPY --from=deps /app/node_modules ./node_modules
@@ -54,8 +43,8 @@ COPY --from=deps --chown=nextjs:nodejs /app/node_modules ./node_modules
 EXPOSE 3000
 ENV PORT 3000
 
-RUN mkdir /app/test
-VOLUME [ "/app/test" ]
+RUN mkdir /app/files
+VOLUME [ "/app/files" ]
 
 # Show current folder structure in logs
 #RUN ls -al -R -I "node_modules" -I "maps"  -I "dists"

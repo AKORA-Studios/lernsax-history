@@ -4,3 +4,5 @@ services:
     container_name: lernsax_history
     env_file:
       - .env
+    volumes:
+      - ./files:/app/files:ro
