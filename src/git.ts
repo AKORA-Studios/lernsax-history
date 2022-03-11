@@ -1,7 +1,7 @@
 import simpleGit, { SimpleGit } from 'simple-git';
 import config from './config';
 import { basename, join } from 'node:path';
-import { exec, execFileSync } from 'node:child_process';
+import { execFileSync } from 'node:child_process';
 import { access } from 'node:fs/promises';
 
 export const gitPath = join(__dirname, '../git');
@@ -17,7 +17,7 @@ export async function initRepo() {
         execFileSync('git', ['pull']);
         //await pull();
     } catch (e) {
-        console.log(e);
+        //console.log(e);
         //Clone if not existing yet
         //await simpleGit(join(gitPath, '..')).clone(GIT_URL, gitPath);
         execFileSync('git', ['clone', GIT_URL, gitPath]);
