@@ -31,18 +31,18 @@ RUN apk --update add git git-lfs less openssh && \
 COPY --from=deps --chown=nextjs:nodejs /app/node_modules ./node_modules
 
 # You only need to copy next.config.js if you are NOT using the default configuration
+COPY ./.swcrc ./.swcrc
 COPY ./tsconfig.json ./tsconfig.json
 COPY ./package.json ./package.json
 
 # Automatically leverage output traces to reduce image size
 COPY ./src ./src
 # Compile
-RUN npx swc src -d dist
+RUN npx swc src -d dist \
+    && mkdir /app/files
 
 # Volumes
-VOLUME [ "/app/git" ]
-RUN mkdir /app/files
-VOLUME [ "/app/files" ]
+VOLUME [ "/app/git", "/app/files"  ]
 
 # Show current folder structure in logs
 #RUN ls -al -R -I "node_modules" -I "maps"  -I "dists"

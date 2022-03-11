@@ -1,7 +1,21 @@
-node_modules
+
+# Configs
 .prettierrc
-maps
-dist
 .env*
-files
+.gitattributes
+.gitignore
+
+# Runtime
+files/
+git/
+data.json
+
+# Docker
+*.yml
 Dockerfile
+
+
+# Build
+node_modules/
+maps/
+dist/
