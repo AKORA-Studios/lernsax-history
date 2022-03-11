@@ -9,48 +9,41 @@ RUN npm ci -q
 
 
 
-# Rebuild the source code only when needed
-FROM node:16-alpine AS builder
-WORKDIR /app
-RUN npm i -g typescript
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
-RUN tsc
-
-
-
-
-
 # Production image, copy all the files and run next
 FROM node:16-bullseye-slim AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
 
-RUN addgroup -g 1001 -S nodejs\
-    && adduser -S nextjs -u 1001 
+RUN addgroup --system --gid 1001 nodejs\
+    && adduser nextjs --gid 1001 
 #    && chsh -s /usr/sbin/nologin root
 
 # Install git as dependency
 RUN apt-get -qq update && apt-get -y install --no-install-recommends \
-    git=2.30.2 \
-    davfs2=1.6.0 \
+    git \
+    davfs2 \
     && rm -rf /var/lib/apt/lists/*
 
 
 
 ## MOunt WebDAV https://wiki.archlinux.org/title/Davfs2
+RUN touch /etc/davfs2/davfs2.conf
 
 
+# Build
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+#RUN npx -p typescript tsc
 
 # You only need to copy next.config.js if you are NOT using the default configuration
-COPY --from=builder /app/tsconfig.json ./tsconfig.json
-COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
+COPY ./tsconfig.json ./tsconfig.json
+COPY ./package.json ./package.json
 
 # Automatically leverage output traces to reduce image size
-COPY --from=builder /app/src ./src
-COPY --from=builder --chown=nextjs:nodejs /app/dist ./dist
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
+COPY ./src ./src
+#COPY --from=deps --chown=nextjs:nodejs /app/dist ./dist
+COPY --from=deps --chown=nextjs:nodejs /app/node_modules ./node_modules
 # COPY --from=builder --chown=nextjs:nodejs /app/.env ./.env
 
 
@@ -63,4 +56,4 @@ VOLUME [ "/app/test" ]
 # Show current folder structure in logs
 #RUN ls -al -R -I "node_modules" -I "maps"  -I "dists"
 USER nextjs
-CMD [ "node",  "./dist/index.js" ]
+CMD [  "npx","ts-node",  "./dist/index.js" ]

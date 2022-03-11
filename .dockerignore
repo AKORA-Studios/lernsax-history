@@ -3,3 +3,4 @@ node_modules
 maps
 dist
 .env*
+Dockerfile

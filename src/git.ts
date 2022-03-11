@@ -4,9 +4,10 @@ import { filesPath } from './files';
 import { basename } from 'node:path';
 
 const git = simpleGit(filesPath);
+const GIT_URL = `https://${config.GIT_USER}:${config.GIT_PASSWORD}@github.com/${config.GIT_REPO}`;
 
 export function initRepo() {
-    return git.clone(config.GIT_URL, filesPath);
+    return git.clone(GIT_URL, filesPath);
 }
 
 export function pull() {

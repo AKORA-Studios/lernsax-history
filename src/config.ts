@@ -13,13 +13,14 @@ export const config = {
     PASSWORD: process.env.LERNSAX_PASSWORD!,
     NODE_ENV: process.env.NODE_ENV,
     WEBDAV_URL: process.env.LERNSAX_WEBDAV_URL!,
-    GIT_URL: process.env.GIT_URL!,
+    GIT_USER: process.env.GIT_USER!,
+    GIT_PASSWORD: process.env.GIT_PASSWORD!,
+    GIT_REPO: process.env.GIT_REPO!,
     DEV: isDev,
 };
 
 if (!config.USERNAME) throw new Error('Username missing');
 if (!config.PASSWORD) throw new Error('Username missing');
-if (!config.GIT_URL) throw new Error('Git Repo missing');
 if (!config.WEBDAV_URL) throw new Error('WebDav URL missing');
 
 export default config;
