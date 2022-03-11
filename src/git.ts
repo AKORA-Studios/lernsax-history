@@ -1,4 +1,3 @@
-import simpleGit, { SimpleGit } from 'simple-git';
 import config from './config';
 import { basename, join } from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -7,7 +6,6 @@ import { mkdirSync, rmdirSync, rmSync } from 'node:fs';
 
 export const gitPath = join(__dirname, '../git');
 
-let git: SimpleGit;
 const GIT_URL = `http://${config.GIT_USER}:${config.GIT_PASSWORD}@${config.GIT_HOST}/${config.GIT_REPO}`;
 
 function execGit(...args: string[]) {
@@ -33,7 +31,6 @@ export async function initRepo() {
             execFileSync('git', ['clone', GIT_URL, gitPath]);
         }
     }
-    git = simpleGit(gitPath);
 }
 
 export function pull() {
