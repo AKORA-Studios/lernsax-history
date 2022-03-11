@@ -3,6 +3,7 @@ import config from './config';
 import { basename, join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { access } from 'node:fs/promises';
+import { mkdirSync, rmdirSync, rmSync } from 'node:fs';
 
 export const gitPath = join(__dirname, '../git');
 
@@ -13,17 +14,20 @@ export async function initRepo() {
     try {
         //Pull if already cloned
         await access(gitPath);
-        git = simpleGit(gitPath);
         execFileSync('git', ['pull']);
         //await pull();
     } catch (e) {
         //console.log(e);
         //Clone if not existing yet
-        //await simpleGit(join(gitPath, '..')).clone(GIT_URL, gitPath);
-        execFileSync('git', ['clone', GIT_URL, gitPath]);
-
-        git = simpleGit(gitPath);
+        try {
+            //await simpleGit(join(gitPath, '..')).clone(GIT_URL, gitPath);
+            execFileSync('git', ['clone', GIT_URL, gitPath]);
+        } catch (e) {
+            rmSync(gitPath, { recursive: true, force: true });
+            execFileSync('git', ['clone', GIT_URL, gitPath]);
+        }
     }
+    git = simpleGit(gitPath);
 }
 
 export function pull() {
