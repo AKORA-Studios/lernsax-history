@@ -24,7 +24,7 @@ async function main() {
 
 export async function stop(err?: Error) {
     saveData();
-    push();
+    //push();
     if (err) throw Error;
 }
 
