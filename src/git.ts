@@ -14,7 +14,9 @@ export async function initRepo() {
     try {
         //Pull if already cloned
         await access(gitPath);
-        execFileSync('git', ['pull']);
+        execFileSync('git', ['pull'], {
+            cwd: gitPath,
+        });
         //await pull();
     } catch (e) {
         //console.log(e);
