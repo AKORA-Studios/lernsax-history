@@ -20,7 +20,7 @@ async function main() {
     await initRepo();
     console.log('✅ - Repo up to date');
 
-    await syncWebDAV();
+    //await syncWebDAV();
 }
 
 export async function stop(err?: Error) {

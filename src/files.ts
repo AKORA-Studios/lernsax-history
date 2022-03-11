@@ -4,7 +4,6 @@ import { join } from 'node:path';
 import { FileStat } from 'webdav';
 import client from '.';
 import { data, FileTree, saveData } from './config';
-import { initRepo, pull } from './git';
 
 export const filesPath = join(__dirname, '../files');
 
