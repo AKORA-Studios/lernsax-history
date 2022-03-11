@@ -3,4 +3,5 @@ node_modules
 maps
 dist
 .env*
+files
 Dockerfile
