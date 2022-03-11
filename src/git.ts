@@ -10,6 +10,12 @@ export const gitPath = join(__dirname, '../git');
 let git: SimpleGit;
 const GIT_URL = `http://${config.GIT_USER}:${config.GIT_PASSWORD}@${config.GIT_HOST}/${config.GIT_REPO}`;
 
+function execGit(...args: string[]) {
+    return execFileSync('git', args, {
+        cwd: gitPath,
+    }).toString();
+}
+
 export async function initRepo() {
     try {
         //Pull if already cloned
@@ -31,18 +37,14 @@ export async function initRepo() {
 }
 
 export function pull() {
-    return execFileSync('git', ['pull'], {
-        cwd: gitPath,
-    }).toString();
+    return;
 }
 
-export async function commitFile(path: string) {
-    await git.add(path);
-    return await git.commit(basename(path));
+export function commitFiles() {
+    execGit('add', '*');
+    return execGit('commit', '-m', 'Updated at ' + new Date().toLocaleString());
 }
 
 export function push() {
-    return execFileSync('git', ['push'], {
-        cwd: gitPath,
-    }).toString();
+    return execGit('push');
 }

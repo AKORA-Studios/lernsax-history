@@ -2,7 +2,7 @@ import config, { saveData } from './config'; //Load env variables
 import './files';
 
 import { createClient } from 'webdav';
-import { initRepo, push } from './git';
+import { commitFiles, initRepo, push } from './git';
 import { copyWebDAV } from './files';
 
 export const client = createClient(config.WEBDAV_URL, {
@@ -23,6 +23,7 @@ async function main() {
     copyWebDAV();
     console.log('✅ - Synced files');
 
+    commitFiles();
     push();
     console.log('✅ - Pushed to git');
     //await syncWebDAV();
