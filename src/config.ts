@@ -7,18 +7,20 @@ import { join } from 'node:path';
 //Load enviroment variables
 loadConfig();
 
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'development',
+    isProd = process.env.NODE_ENV === 'production';
 
 export const config = {
     USERNAME: process.env.LERNSAX_USERNAME!,
     PASSWORD: process.env.LERNSAX_PASSWORD!,
-    NODE_ENV: process.env.NODE_ENV,
+    NODE_ENV: process.env.NODE_ENV as 'development' | 'production' | undefined,
     WEBDAV_URL: process.env.LERNSAX_WEBDAV_URL!,
     GIT_USER: process.env.GIT_USER!,
     GIT_PASSWORD: process.env.GIT_PASSWORD!,
     GIT_REPO: process.env.GIT_REPO!,
     GIT_HOST: process.env.GIT_HOST!,
     DEV: isDev,
+    PROD: isProd,
 };
 
 if (!config.USERNAME) throw new Error('Username missing');

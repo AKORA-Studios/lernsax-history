@@ -3,17 +3,23 @@ import './files';
 
 import { commitFiles, initRepo, push } from './git';
 import { copyWebDAV } from './files';
+import { config } from './config';
 
 async function main() {
+    if (config.PROD) console.log('Started', new Date().toLocaleString());
     await initRepo();
-    console.log('✅ - Repo up to date');
+
+    if (!config.PROD) console.log('✅ - Repo up to date');
 
     copyWebDAV();
-    console.log('✅ - Synced files');
+    if (!config.PROD) console.log('✅ - Synced files');
 
     commitFiles();
     push();
-    console.log('✅ - Pushed to git');
+    if (!config.PROD) console.log('✅ - Pushed to git');
+
+    if (config.PROD) console.log('Finished', new Date().toLocaleString());
+
     //await syncWebDAV();
 }
 
