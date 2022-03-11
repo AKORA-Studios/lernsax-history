@@ -1,5 +1,6 @@
 import { config as loadConfig } from 'dotenv';
 import md5 from 'md5';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
@@ -27,6 +28,11 @@ if (!config.WEBDAV_URL) throw new Error('WebDav URL missing');
 export default config;
 
 //persistent Data
+try {
+    readFileSync(join(__dirname, '../data.json'));
+} catch (e) {
+    writeFileSync(join(__dirname, '../data.json'), '{}');
+}
 import rawData from '../data.json';
 
 type File = string;
