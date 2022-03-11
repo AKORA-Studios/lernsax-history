@@ -15,7 +15,6 @@ export default client;
 async function main() {
     await client.getQuota();
     saveData();
-
     console.log('✅ - Connected Client');
 
     await initRepo();
