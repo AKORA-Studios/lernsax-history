@@ -49,5 +49,5 @@ VOLUME [ "/app/git", "/app/files" ]
 
 # Show current folder structure in logs
 #RUN ls -al -R -I "node_modules" -I "maps"  -I "dists"
-USER nextjs
+#USER nextjs
 CMD [  "node",  "./dist/index.js" ]
