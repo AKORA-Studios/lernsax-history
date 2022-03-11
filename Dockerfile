@@ -58,7 +58,7 @@ VOLUME [ "/app/git", "/app/files" ]
 RUN echo "node /app/dist/index.js" > /app/start.sh \
     && chmod +x /app/start.sh
 RUN touch /etc/crontabs/root
-RUN * */6 * * * /app/start.sh > /etc/crontabs/root
+RUN echo "* */6 * * * /app/start.sh" > /etc/crontabs/root
 RUN chown root:root /etc/crontabs/root
 
 CMD [ "/usr/sbin/crond", "-f"]
