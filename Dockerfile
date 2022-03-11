@@ -4,8 +4,8 @@ FROM node:16-alpine AS deps
 RUN apk add --no-cache libc6-compat=1.2.2-r7
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci -q
-
+RUN npm ci -q \
+    && npm i -D @swc/core-linux-musl
 
 
 
@@ -36,14 +36,15 @@ COPY ./package.json ./package.json
 
 # Automatically leverage output traces to reduce image size
 COPY ./src ./src
-#COPY --from=deps --chown=nextjs:nodejs /app/dist ./dist
-# COPY --from=builder --chown=nextjs:nodejs /app/.env ./.env
+# Compile
+RUN npx swc src -d dist
 
+# Volumes
+VOLUME [ "/app/git" ]
 RUN mkdir /app/files
 VOLUME [ "/app/files" ]
-VOLUME [ "/app/git" ]
 
 # Show current folder structure in logs
 #RUN ls -al -R -I "node_modules" -I "maps"  -I "dists"
 USER nextjs
-CMD [  "npx", "ts-node",  "./dist/index.js" ]
+CMD [  "node",  "./dist/index.js" ]
