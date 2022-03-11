@@ -1,3 +1,7 @@
+networks:
+    lernsax:
+      name: lernsax
+
 services:
   app:
     build: .
@@ -6,3 +10,5 @@ services:
       - .env
     volumes:
       - ./files:/app/files:ro
+    networks:
+      - lernsax
