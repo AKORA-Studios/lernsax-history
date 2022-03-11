@@ -33,7 +33,7 @@ try {
 } catch (e) {
     writeFileSync(join(__dirname, '../data.json'), '{}');
 }
-import rawData from '../data.json';
+const rawData = JSON.parse(readFileSync(join(__dirname, '../data.json')).toString());
 
 type File = string;
 type Dir = { name: string; files: FileTree | null };
