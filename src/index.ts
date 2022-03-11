@@ -2,7 +2,6 @@ import config, { saveData } from './config'; //Load env variables
 import './files';
 
 import { createClient } from 'webdav';
-import { syncWebDAV } from './files';
 import { initRepo, push } from './git';
 
 export const client = createClient(config.WEBDAV_URL, {
