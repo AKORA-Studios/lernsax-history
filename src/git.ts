@@ -1,8 +1,8 @@
 import config from './config';
-import { basename, join } from 'node:path';
+import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { access } from 'node:fs/promises';
-import { mkdirSync, rmdirSync, rmSync } from 'node:fs';
+import { rmSync } from 'node:fs';
 
 export const gitPath = join(__dirname, '../git');
 

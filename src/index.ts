@@ -1,4 +1,4 @@
-import config, { saveData } from './config'; //Load env variables
+import { saveData } from './config'; //Load env variables
 import './files';
 
 import { commitFiles, initRepo, push } from './git';
