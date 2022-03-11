@@ -2,10 +2,9 @@
     "name": "lernsax-history",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "./dist/index.js",
     "scripts": {
-        "build": "npx swc src -d dist ",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "build": "npx swc src -d dist "
     },
     "keywords": [],
     "author": "",
