@@ -54,7 +54,15 @@ RUN npx swc src -d dist \
 # Volumes
 VOLUME [ "/app/git", "/app/files" ]
 
+# Set UP cron job
+RUN echo "node ./dist/index.js" > /app/start.sh \
+    && chmod +x /app/start.sh \
+    && touch /etc/crontabs/root \
+    && * */6 * * * /app/start.sh > /etc/crontabs/root \
+    && chown root:root /etc/crontabs/root
+
+CMD [ "/usr/sbin/crond", "-f"]
+
 # Show current folder structure in logs
 #RUN ls -al -R -I "node_modules" -I "maps"  -I "dists"
 #USER nextjs
-CMD [  "node",  "./dist/index.js" ]
