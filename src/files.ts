@@ -1,25 +1,28 @@
-import { execFileSync, execSync } from 'node:child_process';
-import { existsSync, mkdirSync } from 'node:fs';
-import { join } from 'node:path';
-import { gitPath } from './git';
+import { join, dirname, fromFileUrl } from 'https://deno.land/std@0.129.0/path/mod.ts';
+import { gitPath } from './git.ts';
 
+export const __dirname = dirname(fromFileUrl(import.meta.url));
 export const filesPath = join(__dirname, '../files');
 console.log(filesPath, gitPath);
 
-if (!existsSync(filesPath))
-    try {
-        mkdirSync(filesPath);
-    } catch (e) {}
+try {
+    Deno.mkdirSync(filesPath);
+} catch (_) {
+    /** */
+}
 
-export function copyWebDAV() {
+export async function copyWebDAV() {
     console.log('Start copying...');
-    const res = execFileSync('rsync', [
-        '-rpt',
-        '--max-size=2m',
-        '--cvs-exclude', //ignores all files CVS ignores
-        filesPath + '/', //Doesnt create a "files" fodler in the git folder
-        gitPath,
-    ]);
-    console.log(execSync('ls -lah ' + gitPath).toString());
+    const res = await Deno.run({
+        cmd: [
+            'rsync',
+            '-rpt',
+            '--max-size=2m',
+            '--cvs-exclude', //ignores all files CVS ignores
+            filesPath + '/', //Doesnt create a "files" fodler in the git folder
+            gitPath,
+        ],
+    }).status();
+    console.log(await Deno.run({ cmd: ['ls', '-lah', gitPath], stdout: 'piped' }).status());
     console.log(res.toString());
 }

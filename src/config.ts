@@ -1,24 +1,20 @@
-import { config as loadConfig } from 'dotenv';
-import md5 from 'md5';
-import { readFileSync, writeFileSync } from 'node:fs';
-import { writeFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import { hmac } from 'https://deno.land/x/hmac@v2.0.1/mod.ts';
 
-//Load enviroment variables
-loadConfig();
+import { join } from 'https://deno.land/std@0.129.0/path/mod.ts';
+import { __dirname } from './files.ts';
 
-const isDev = process.env.NODE_ENV === 'development',
-    isProd = process.env.NODE_ENV === 'production';
+const isDev = Deno.env.get('NODE_ENV') === 'development',
+    isProd = Deno.env.get('NODE_ENV') === 'production';
 
 export const config = {
-    USERNAME: process.env.LERNSAX_USERNAME!,
-    PASSWORD: process.env.LERNSAX_PASSWORD!,
-    NODE_ENV: process.env.NODE_ENV as 'development' | 'production' | undefined,
-    WEBDAV_URL: process.env.LERNSAX_WEBDAV_URL!,
-    GIT_USER: process.env.GIT_USER!,
-    GIT_PASSWORD: process.env.GIT_PASSWORD!,
-    GIT_REPO: process.env.GIT_REPO!,
-    GIT_HOST: process.env.GIT_HOST!,
+    USERNAME: Deno.env.get('LERNSAX_USERNAME!'),
+    PASSWORD: Deno.env.get('LERNSAX_PASSWORD!'),
+    NODE_ENV: Deno.env.get("NODE_ENV as 'development' | 'production' | undefined"),
+    WEBDAV_URL: Deno.env.get('LERNSAX_WEBDAV_URL!'),
+    GIT_USER: Deno.env.get('GIT_USER!'),
+    GIT_PASSWORD: Deno.env.get('GIT_PASSWORD!'),
+    GIT_REPO: Deno.env.get('GIT_REPO!'),
+    GIT_HOST: Deno.env.get('GIT_HOST!'),
     DEV: isDev,
     PROD: isProd,
 };
@@ -32,10 +28,10 @@ export default config;
 //persistent Data
 let rawData;
 try {
-    readFileSync(join(__dirname, '../data.json'));
-    rawData = JSON.parse(readFileSync(join(__dirname, '../data.json')).toString());
-} catch (e) {
-    writeFileSync(join(__dirname, '../data.json'), '{}');
+    Deno.readFileSync(join(__dirname, '../data.json'));
+    rawData = JSON.parse(Deno.readFileSync(join(__dirname, '../data.json')).toString());
+} catch (_) {
+    Deno.writeTextFileSync(join(__dirname, '../data.json'), '{}');
     rawData = {};
 }
 
@@ -44,14 +40,14 @@ type Dir = { name: string; files: FileTree | null };
 type Entry = File | Dir;
 export type FileTree = Entry[];
 
-export const data = rawData as any as {
+export const data = rawData as {
     hash: string;
     lastRun: Date;
     /** FileTree */
     filetree: FileTree;
 };
 
-const hash = md5(config.WEBDAV_URL + config.USERNAME + config.PASSWORD);
+const hash = hmac('sha256', 'key', config.WEBDAV_URL + config.USERNAME + config.PASSWORD, 'utf8', 'base64').toString();
 
 data.lastRun ??= new Date(0);
 data.lastRun = new Date(data.lastRun);
@@ -66,7 +62,7 @@ export const lastRun = new Date(data.lastRun.getTime());
 export function saveData() {
     data.lastRun = scriptStart;
 
-    return writeFile(join(__dirname, '../data.json'), JSON.stringify(data, null, 4));
+    return Deno.writeTextFileSync(join(__dirname, '../data.json'), JSON.stringify(data, null, 4));
 }
 saveData();
 

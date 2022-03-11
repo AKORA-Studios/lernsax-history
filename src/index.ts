@@ -1,9 +1,9 @@
-import { saveData } from './config'; //Load env variables
-import './files';
+import { saveData } from './config.ts'; //Load env variables
+import './files.ts';
 
-import { commitFiles, initRepo, push } from './git';
-import { copyWebDAV } from './files';
-import { config } from './config';
+import { commitFiles, initRepo, push } from './git.ts';
+import { copyWebDAV } from './files.ts';
+import { config } from './config.ts';
 
 async function main() {
     if (config.PROD) console.log('Started', new Date().toLocaleString());
@@ -23,13 +23,14 @@ async function main() {
     //await syncWebDAV();
 }
 
-export async function stop(err?: Error) {
+export function stop(err?: Error) {
     saveData();
     //push();
     if (err) throw Error;
 }
 
-process.on('uncaughtException', (err) => stop(err));
-process.on('SIGTERM', () => stop());
+Deno.addSignalListener('SIGTERM', () => {
+    stop();
+});
 
 main();
