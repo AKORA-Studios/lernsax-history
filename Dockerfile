@@ -15,9 +15,10 @@ WORKDIR /app
 
 ENV NODE_ENV production
 
-RUN addgroup -g 1001 -S nodejs \
-    && adduser -S nextjs -u 1001
-#    && chsh -s /usr/sbin/nologin root
+# RUN addgroup -g 1001 -S nodejs \
+#    && adduser -S nextjs -u 1001
+#    && chsh -s /usr/sbin/nologin root \
+#    && chown -R nextjs /app
 
 # Install git as dependency
 RUN apk fix
@@ -33,18 +34,11 @@ RUN apk --no-cache add \
 RUN git config --global user.email "git-history@lernsax.de" \
     && git config --global user.name "Git History Bot"
 
-RUN chown -R nextjs /app
-
 # Modules
 COPY --from=deps --chown=nextjs:nodejs /app/node_modules ./node_modules
 
-# You only need to copy next.config.js if you are NOT using the default configuration
-COPY ./.swcrc ./.swcrc
-COPY ./tsconfig.json ./tsconfig.json
-COPY ./package.json ./package.json
-
-# Automatically leverage output traces to reduce image size
-COPY ./src ./src
+# Copy all files -> KEEP .dockerignore UP TO DATE
+COPY . .
 
 
 # Compile
@@ -63,6 +57,4 @@ RUN echo "node ./dist/index.js" > /app/start.sh \
 
 CMD [ "/usr/sbin/crond", "-f"]
 
-# Show current folder structure in logs
-#RUN ls -al -R -I "node_modules" -I "maps"  -I "dists"
 #USER nextjs
