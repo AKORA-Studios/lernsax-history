@@ -29,6 +29,10 @@ RUN apk --no-cache add \
     rsync=3.2.3-r5 \
     && git lfs install
 
+# Configure git
+RUN git config --global user.email "git-history@lernsax.de" \
+    && git config --global user.name "Git History Bot"
+
 RUN chown -R nextjs /app
 
 # Modules
