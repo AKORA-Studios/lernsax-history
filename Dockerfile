@@ -39,7 +39,8 @@ COPY ./package.json ./package.json
 COPY ./src ./src
 # Compile
 RUN npx swc src -d dist \
-    && mkdir /app/files
+    && mkdir /app/files \
+    && chown -R nextjs /app
 
 # Volumes
 VOLUME [ "/app/git", "/app/files"  ]
