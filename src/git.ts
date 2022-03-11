@@ -1,8 +1,11 @@
 import simpleGit from 'simple-git';
 import config from './config';
 import { basename, join } from 'node:path';
+import { existsSync, mkdirSync } from 'node:fs';
 
 export const gitPath = join(__dirname, '../git');
+
+if (!existsSync(gitPath)) mkdirSync(gitPath);
 
 const git = simpleGit(gitPath);
 const GIT_URL = `https://${config.GIT_USER}:${config.GIT_PASSWORD}@${config.GIT_HOST}/${config.GIT_REPO}`;

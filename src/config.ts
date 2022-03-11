@@ -28,12 +28,14 @@ if (!config.WEBDAV_URL) throw new Error('WebDav URL missing');
 export default config;
 
 //persistent Data
+let rawData;
 try {
     readFileSync(join(__dirname, '../data.json'));
+    rawData = JSON.parse(readFileSync(join(__dirname, '../data.json')).toString());
 } catch (e) {
     writeFileSync(join(__dirname, '../data.json'), '{}');
+    rawData = {};
 }
-const rawData = JSON.parse(readFileSync(join(__dirname, '../data.json')).toString());
 
 type File = string;
 type Dir = { name: string; files: FileTree | null };

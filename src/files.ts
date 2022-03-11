@@ -1,4 +1,3 @@
-import { dir } from 'node:console';
 import { existsSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { FileStat } from 'webdav';
@@ -6,6 +5,7 @@ import client from '.';
 import { data, FileTree, saveData } from './config';
 
 export const filesPath = join(__dirname, '../files');
+if (!existsSync(filesPath)) mkdirSync(filesPath);
 
 async function traverse(path: string): Promise<[FileTree, boolean]> {
     let tree: FileTree = [];
