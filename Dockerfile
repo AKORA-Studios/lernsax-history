@@ -20,9 +20,8 @@ RUN addgroup --system --gid 1001 nodejs\
 #    && chsh -s /usr/sbin/nologin root
 
 # Install git as dependency
-RUN apt-get -qq update && apt-get -y -qq install --no-install-recommends \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache  \
+    git=2.35.1-r0 
 
 # Build
 COPY --from=deps /app/node_modules ./node_modules
