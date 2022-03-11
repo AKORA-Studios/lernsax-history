@@ -13,8 +13,8 @@ if (!existsSync(filesPath))
 export function copyWebDAV() {
     execFileSync('rsync', [
         '-rpt',
-        '--max-size=1m',
-        '--exclude-from=' + join(__dirname, '.gitignore'),
+        '--max-size=2m',
+        '--exclude-from=' + join(gitPath, '.gitignore'),
         filesPath,
         gitPath,
     ]);
