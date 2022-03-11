@@ -26,6 +26,7 @@ RUN apk --update add git git-lfs less openssh && \
     rm -rf /var/lib/apt/lists/* && \
     rm /var/cache/apk/*
 
+RUN chown -R nextjs /app
 
 # Modules
 COPY --from=deps --chown=nextjs:nodejs /app/node_modules ./node_modules
@@ -37,10 +38,11 @@ COPY ./package.json ./package.json
 
 # Automatically leverage output traces to reduce image size
 COPY ./src ./src
+
+
 # Compile
 RUN npx swc src -d dist \
-    && mkdir /app/files \
-    && chown -R nextjs /app
+    && mkdir /app/files 
 
 # Volumes
 VOLUME [ "/app/git", "/app/files"  ]
