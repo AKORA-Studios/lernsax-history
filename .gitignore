@@ -1,8 +1,12 @@
-**/dist
-**/maps
-**/node_modules
+# Build
+dist/
+maps/
+node_modules/
+
+# Secrets
 **/*.env
-**/test
+
+# Runtime
 data.json
 files/
 git/
