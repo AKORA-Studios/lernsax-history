@@ -55,7 +55,7 @@ RUN npx swc src -d dist \
 VOLUME [ "/app/git", "/app/files" ]
 
 # Set UP cron job
-RUN echo "node ./dist/index.js" > /app/start.sh \
+RUN echo "node /app/dist/index.js" > /app/start.sh \
     && chmod +x /app/start.sh
 RUN touch /etc/crontabs/root \
     && * */6 * * * /app/start.sh > /etc/crontabs/root \
