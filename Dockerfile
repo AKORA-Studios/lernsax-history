@@ -15,8 +15,8 @@ WORKDIR /app
 
 ENV NODE_ENV production
 
-RUN addgroup --system --gid 1001 nodejs\
-    && adduser nextjs --gid 1001 
+RUN addgroup -g 1001 -S nodejs \
+    && adduser -S nextjs -u 1001
 #    && chsh -s /usr/sbin/nologin root
 
 # Install git as dependency
