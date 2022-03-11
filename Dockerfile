@@ -56,8 +56,8 @@ VOLUME [ "/app/git", "/app/files" ]
 
 # Set UP cron job
 RUN echo "node ./dist/index.js" > /app/start.sh \
-    && chmod +x /app/start.sh \
-    && touch /etc/crontabs/root \
+    && chmod +x /app/start.sh
+RUN touch /etc/crontabs/root \
     && * */6 * * * /app/start.sh > /etc/crontabs/root \
     && chown root:root /etc/crontabs/root
 
