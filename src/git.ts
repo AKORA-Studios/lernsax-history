@@ -1,21 +1,21 @@
-import simpleGit from 'simple-git';
+import simpleGit, { SimpleGit } from 'simple-git';
 import config from './config';
 import { basename, join } from 'node:path';
-import { existsSync, mkdirSync } from 'node:fs';
 
 export const gitPath = join(__dirname, '../git');
 
-if (!existsSync(gitPath)) mkdirSync(gitPath);
-
-const git = simpleGit(gitPath);
-const GIT_URL = `https://${config.GIT_USER}:${config.GIT_PASSWORD}@${config.GIT_HOST}/${config.GIT_REPO}`;
+let git: SimpleGit;
+const GIT_URL = `http://${config.GIT_USER}:${config.GIT_PASSWORD}@${config.GIT_HOST}/${config.GIT_REPO}`;
 
 export async function initRepo() {
     try {
+        //Pull if already cloned
+        git = simpleGit(gitPath);
         await pull();
     } catch (e) {
-        //Repo doesnt exist
-        await git.clone(GIT_URL, gitPath);
+        //Clone if not existing yet
+        await simpleGit(join(gitPath, '..')).clone(GIT_URL, gitPath);
+        git = simpleGit(gitPath);
     }
 }
 

@@ -1,8 +1,7 @@
 **/dist
 **/maps
 **/node_modules
-**/.env
-**/local.env
+**/*.env
 **/test
 data.json
 files/
