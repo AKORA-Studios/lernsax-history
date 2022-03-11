@@ -14,9 +14,7 @@ export async function initRepo() {
     try {
         //Pull if already cloned
         await access(gitPath);
-        execFileSync('git', ['pull'], {
-            cwd: gitPath,
-        });
+        pull();
         //await pull();
     } catch (e) {
         //console.log(e);
@@ -33,7 +31,9 @@ export async function initRepo() {
 }
 
 export function pull() {
-    return git.pull();
+    return execFileSync('git', ['pull'], {
+        cwd: gitPath,
+    }).toString();
 }
 
 export async function commitFile(path: string) {
@@ -42,5 +42,7 @@ export async function commitFile(path: string) {
 }
 
 export function push() {
-    return git.push();
+    return execFileSync('git', ['push'], {
+        cwd: gitPath,
+    }).toString();
 }

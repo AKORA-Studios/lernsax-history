@@ -22,6 +22,9 @@ async function main() {
 
     copyWebDAV();
     console.log('✅ - Synced files');
+
+    push();
+    console.log('✅ - Pushed to git');
     //await syncWebDAV();
 }
 

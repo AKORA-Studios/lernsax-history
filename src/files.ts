@@ -1,4 +1,4 @@
-import { execFileSync } from 'node:child_process';
+import { execFileSync, execSync } from 'node:child_process';
 import { existsSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { gitPath } from './git';
@@ -11,11 +11,14 @@ if (!existsSync(filesPath))
     } catch (e) {}
 
 export function copyWebDAV() {
-    execFileSync('rsync', [
+    console.log('Start copying...');
+    const res = execFileSync('rsync', [
         '-rpt',
         '--max-size=2m',
         '--exclude-from=' + join(gitPath, '.gitignore'),
         filesPath,
         gitPath,
     ]);
+    console.log(execSync('ls -lah ' + gitPath).toString());
+    console.log(res.toString());
 }
