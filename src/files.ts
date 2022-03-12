@@ -22,5 +22,5 @@ export async function copyWebDAV() {
             gitPath,
         ],
     }).status();
-    await Deno.run({ cmd: ['ls', '-lah', gitPath] }).status();
+    //await Deno.run({ cmd: ['ls', '-lah', gitPath] }).status();
 }
