@@ -18,8 +18,8 @@ RUN git config --global user.email "git-history@lernsax.de" \
     && git config --global user.name "Git History Bot"
 
 # Modules
-COPY deps.ts .
-RUN deno cache deps.ts
+COPY ./src/deps.ts ./src/deps.ts
+RUN deno cache ./src/deps.ts
 
 # Copy all files -> KEEP .dockerignore UP TO DATE
 COPY ./src ./src
@@ -28,7 +28,7 @@ COPY ./src ./src
 VOLUME [ "/app/git", "/app/files" ]
 
 # Set UP cron job
-RUN echo "deno run -A /app/src/index.ts" > /app/start.sh \
+RUN echo "deno run -A /app/src/mod.ts" > /app/start.sh \
     && chmod +x /app/start.sh \
     && touch /etc/crontabs/root \
     && echo "* */6 * * * /app/start.sh" > /etc/crontabs/root \
