@@ -8,6 +8,7 @@ services:
     build: .
     container_name: lernsax_history
     restart: unless-stopped
+    init: true
     env_file:
       - .env
     volumes:
