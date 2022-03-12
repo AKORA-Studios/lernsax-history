@@ -41,6 +41,9 @@ export async function commitFiles() {
     });
     const [_, output] = await Promise.all([p.status(), p.output().then((s) => new TextDecoder().decode(s))]);
     console.log(JSON.stringify(output));
+
+    if (output === '') return;
+
     const lines = output.split('\n').map((l) => l.replaceAll('"', ''));
 
     const files = lines.map((l) => ({
