@@ -3,8 +3,6 @@ export const filesPath = join(__dirname, '../files');
 
 import { gitPath } from './git.ts';
 
-console.log(filesPath, gitPath);
-
 try {
     Deno.mkdirSync(filesPath);
 } catch (_) {
@@ -13,7 +11,7 @@ try {
 
 export async function copyWebDAV() {
     console.log('Start copying...');
-    const res = await Deno.run({
+    await Deno.run({
         cmd: [
             'rsync',
             '-rpt',
@@ -22,7 +20,7 @@ export async function copyWebDAV() {
             filesPath + '/', //Doesnt create a "files" fodler in the git folder
             gitPath,
         ],
+        stdout: 'piped',
     }).status();
     console.log(await Deno.run({ cmd: ['ls', '-lah', gitPath], stdout: 'piped' }).status());
-    console.log(res.toString());
 }

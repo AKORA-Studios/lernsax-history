@@ -18,7 +18,7 @@ async function main() {
     await push();
     if (!config.PROD) console.log('✅ - Pushed to git');
 
-    if (config.PROD) console.log('Finished', new Date().toLocaleString());
+    if (config.PROD) console.log('Finished', new Date().toLocaleString(), '\n\n');
 
     //await syncWebDAV();
 }
