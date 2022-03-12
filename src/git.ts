@@ -36,7 +36,7 @@ export async function commitFiles() {
      * ?? "path/test s.odp"
      */
     const p = Deno.run({
-        cmd: ['status', '--porcelain'],
+        cmd: ['git', 'status', '--porcelain'],
         cwd: gitPath,
         stdout: 'piped',
     });
