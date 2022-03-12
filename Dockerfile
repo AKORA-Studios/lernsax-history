@@ -33,8 +33,11 @@ VOLUME [ "/app/git", "/app/files" ]
 COPY ./start.sh ./start.sh
 COPY ./cron /etc/crontabs/root
 RUN chmod +x /app/start.sh \
+    && chmod 777 /app/start.sh \
     && chown root:root /etc/crontabs/root
 
-ENTRYPOINT [ "/sbin/tini","-vvv", "--" ]
-CMD [ "/app/start.sh" ]
+
+
+ENTRYPOINT [ "/sbin/tini","-vv", "--", "bash", "/app/start.sh" ]
+# CMD [ "bash", "/app/start.sh" ]
 # CMD [ "/usr/sbin/crond", "-f"]
