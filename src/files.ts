@@ -19,7 +19,7 @@ export async function copyWebDAV() {
             '--delete',
             '--max-size=2m',
             '--cvs-exclude', //ignores all files CVS ignores
-            filesPath + '/', //Doesnt create a "files" fodler in the git folder
+            filesPath, // + '/' Doesnt create a "files" fodler in the git folder
             gitPath,
         ],
     }).status();
