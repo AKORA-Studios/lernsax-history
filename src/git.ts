@@ -13,20 +13,17 @@ function execGit(...args: string[]) {
 }
 
 export async function initRepo() {
-    try {
-        //Pull if already cloned
-        const status = await execGit('pull');
-        console.log(status);
-    } catch (_) {
-        //console.log(e);
-        //Clone if not existing yet
-        try {
-            //await simpleGit(join(gitPath, '..')).clone(GIT_URL, gitPath);
-            await execGit('clone', GIT_URL, gitPath);
-        } catch (e) {
-            console.log(e);
+    //Pull if already cloned
+    const { success } = await execGit('pull');
+    if (!success) {
+        //await simpleGit(join(gitPath, '..')).clone(GIT_URL, gitPath);
+        const { success } = await execGit('clone', GIT_URL, gitPath);
+        if (!success) {
             Deno.removeSync(gitPath, { recursive: true });
-            await execGit('clone', GIT_URL, gitPath);
+            const { success } = await execGit('clone', GIT_URL, gitPath);
+            if (!success) {
+                throw new Error('Git Failed');
+            }
         }
     }
 }

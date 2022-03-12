@@ -38,5 +38,5 @@ RUN chmod +x /app/start.sh \
 
 
 # ENTRYPOINT [ "/sbin/tini","-vv", "--", "sh", "/app/start.sh" ]
-# CMD [ "bash", "/app/start.sh" ]
-CMD [ "/usr/sbin/crond", "-f"]
+CMD [ "/app/start.sh" ]
+#CMD [ "/usr/sbin/crond", "-f"]
