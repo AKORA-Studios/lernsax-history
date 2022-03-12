@@ -6,6 +6,7 @@ ENV NODE_ENV production
 # Install git as dependency
 RUN apk fix
 RUN apk --no-cache add \
+    tini=0.19.0-r0  \
     git=2.30.2-r0 \
     git-lfs=2.13.1-r0 \
     less=563-r0 \
@@ -34,6 +35,6 @@ COPY ./cron /etc/crontabs/root
 RUN chmod +x /app/start.sh \
     && chown root:root /etc/crontabs/root
 
-ENTRYPOINT [ "/usr/libexec/docker-init", "--" ]
+ENTRYPOINT [ "/sbin/tini", "--" ]
 CMD [ "/app/start.sh" ]
 # CMD [ "/usr/sbin/crond", "-f"]
