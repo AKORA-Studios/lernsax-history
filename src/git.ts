@@ -15,7 +15,8 @@ function execGit(...args: string[]) {
 export async function initRepo() {
     try {
         //Pull if already cloned
-        await execGit('pull');
+        const status = await execGit('pull');
+        console.log(status);
     } catch (_) {
         //console.log(e);
         //Clone if not existing yet
