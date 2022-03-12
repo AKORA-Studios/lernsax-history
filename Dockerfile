@@ -15,7 +15,8 @@ RUN apk --no-cache add \
 
 # Configure git
 RUN git config --global user.email "git-history@lernsax.de" \
-    && git config --global user.name "Git History Bot"
+    && git config --global user.name "Git History Bot" \
+    && git config --global pull.ff only
 
 # Modules
 COPY ./src/deps.ts ./src/deps.ts
