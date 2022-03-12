@@ -28,7 +28,8 @@ export async function initRepo() {
         try {
             //await simpleGit(join(gitPath, '..')).clone(GIT_URL, gitPath);
             await execGit('clone', GIT_URL, gitPath);
-        } catch (_) {
+        } catch (e) {
+            console.log(e);
             Deno.removeSync(gitPath, { recursive: true });
             await execGit('clone', GIT_URL, gitPath);
         }
