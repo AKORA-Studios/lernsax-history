@@ -15,8 +15,8 @@ async function execGit(...args: string[]) {
 
     return await Promise.all([
         p.status(),
-        p.output().then((s) => s.toString()),
-        p.stderrOutput().then((s) => s.toString()),
+        p.output().then((s) => new TextDecoder().decode(s)),
+        p.stderrOutput().then((s) => new TextDecoder().decode(s)),
     ]);
 }
 
