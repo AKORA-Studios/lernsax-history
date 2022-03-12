@@ -45,6 +45,7 @@ export async function commitFiles() {
     if (output === '') return;
 
     const lines = output.split('\n').map((l) => l.replaceAll('"', ''));
+    lines.pop();
 
     const files = lines.map((l) => ({
         status: l.split(' ')[0],
