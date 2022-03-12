@@ -1,4 +1,4 @@
-FROM deno:1.19.2 AS runner
+FROM denoland/deno:1.19.2 AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
