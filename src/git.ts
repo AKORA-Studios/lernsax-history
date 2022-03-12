@@ -5,35 +5,27 @@ export const gitPath = join(__dirname, '../git');
 
 const GIT_URL = `http://${config.GIT_USER}:${config.GIT_PASSWORD}@${config.GIT_HOST}/${config.GIT_REPO}`;
 
-async function execGit(...args: string[]) {
-    const p = Deno.run({
+function execGit(...args: string[]) {
+    return Deno.run({
         cmd: ['git', ...args],
         cwd: gitPath,
-        stdout: 'piped',
-        stderr: 'piped',
-    });
-
-    return await Promise.all([
-        p.status(),
-        p.output().then((s) => new TextDecoder().decode(s)),
-        p.stderrOutput().then((s) => new TextDecoder().decode(s)),
-    ]);
+    }).status();
 }
 
 export async function initRepo() {
     try {
         //Pull if already cloned
-        console.log((await execGit('pull'))[1]);
+        await execGit('pull');
     } catch (_) {
         //console.log(e);
         //Clone if not existing yet
         try {
             //await simpleGit(join(gitPath, '..')).clone(GIT_URL, gitPath);
-            console.log((await execGit('clone', GIT_URL, gitPath))[1]);
+            await execGit('clone', GIT_URL, gitPath);
         } catch (e) {
             console.log(e);
             Deno.removeSync(gitPath, { recursive: true });
-            console.log((await execGit('clone', GIT_URL, gitPath))[1]);
+            await execGit('clone', GIT_URL, gitPath);
         }
     }
 }
@@ -43,7 +35,12 @@ export async function commitFiles() {
      *  D path/calendar.ics
      * ?? "path/test s.odp"
      */
-    const [_, output] = await execGit('status', '--porcelain');
+    const p = Deno.run({
+        cmd: ['status', '--porcelain'],
+        cwd: gitPath,
+        stdout: 'piped',
+    });
+    const [_, output] = await Promise.all([p.status(), p.output().then((s) => new TextDecoder().decode(s))]);
     const lines = output.split('\n').map((l) => l.replaceAll('"', ''));
 
     const files = lines.map((l) => ({
@@ -60,5 +57,5 @@ export async function commitFile(path: string, msg: string) {
 }
 
 export async function push() {
-    console.log((await execGit('push'))[1]);
+    await execGit('push');
 }
