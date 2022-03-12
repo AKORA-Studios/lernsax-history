@@ -40,7 +40,6 @@ export async function commitFiles() {
         stdout: 'piped',
     });
     const [_, output] = await Promise.all([p.status(), p.output().then((s) => new TextDecoder().decode(s))]);
-    console.log(JSON.stringify(output));
 
     if (output === '') return;
 
@@ -48,7 +47,7 @@ export async function commitFiles() {
     lines.pop();
 
     const files = lines.map((l) => ({
-        status: l.split(' ')[0],
+        status: l.split(' ')[0].replace('??', 'ADD').replace('D', 'DEL'),
         path: l.slice(3),
     }));
 
