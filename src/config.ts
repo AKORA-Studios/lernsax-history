@@ -1,7 +1,3 @@
-import { hmac } from 'https://deno.land/x/hmac@v2.0.1/mod.ts';
-import { dirname, fromFileUrl, join } from 'https://deno.land/std@0.129.0/path/mod.ts';
-export const __dirname = dirname(fromFileUrl(import.meta.url));
-
 const isDev = Deno.env.get('NODE_ENV') === 'development',
     isProd = Deno.env.get('NODE_ENV') === 'production';
 

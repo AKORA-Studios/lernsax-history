@@ -1,6 +1,4 @@
-import { join, dirname, fromFileUrl } from 'https://deno.land/std@0.129.0/path/mod.ts';
-
-export const __dirname = dirname(fromFileUrl(import.meta.url));
+import { join, __dirname } from './deps.ts';
 export const filesPath = join(__dirname, '../files');
 
 import { gitPath } from './git.ts';
