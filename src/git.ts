@@ -14,7 +14,7 @@ function execGit(...args: string[]) {
 
 export async function initRepo() {
     //Pull if already cloned
-    await execGit('git', 'config', `lfs.${GIT_URL}.git/info/lfs.locksverify`, 'true');
+    await execGit('config', `lfs.${GIT_URL}.git/info/lfs.locksverify`, 'true');
     const { success } = await execGit('pull');
     if (!success) {
         //await simpleGit(join(gitPath, '..')).clone(GIT_URL, gitPath);
