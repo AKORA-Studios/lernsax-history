@@ -6,7 +6,7 @@ ENV NODE_ENV production
 # Install git as dependency
 RUN apk fix
 RUN apk --no-cache add \
-    tini=0.19.0-r0  \
+    #    tini=0.19.0-r0  \
     git=2.30.2-r0 \
     git-lfs=2.13.1-r0 \
     less=563-r0 \
@@ -33,11 +33,10 @@ VOLUME [ "/app/git", "/app/files" ]
 COPY ./start.sh ./start.sh
 COPY ./cron /etc/crontabs/root
 RUN chmod +x /app/start.sh \
-    && chmod 777 /app/start.sh \
     && chown root:root /etc/crontabs/root
 
 
 
-ENTRYPOINT [ "/sbin/tini","-vv", "--", "sh", "/app/start.sh" ]
+# ENTRYPOINT [ "/sbin/tini","-vv", "--", "sh", "/app/start.sh" ]
 # CMD [ "bash", "/app/start.sh" ]
-# CMD [ "/usr/sbin/crond", "-f"]
+CMD [ "/usr/sbin/crond", "-f"]
