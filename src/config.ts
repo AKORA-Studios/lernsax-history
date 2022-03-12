@@ -2,11 +2,11 @@ const isDev = Deno.env.get('NODE_ENV') === 'development',
     isProd = Deno.env.get('NODE_ENV') === 'production';
 
 export const config = {
-    NODE_ENV: Deno.env.get("NODE_ENV as 'development' | 'production' | undefined"),
-    GIT_USER: Deno.env.get('GIT_USER!'),
-    GIT_PASSWORD: Deno.env.get('GIT_PASSWORD!'),
-    GIT_REPO: Deno.env.get('GIT_REPO!'),
-    GIT_HOST: Deno.env.get('GIT_HOST!'),
+    NODE_ENV: Deno.env.get('NODE_ENV') as 'development' | 'production' | undefined,
+    GIT_USER: Deno.env.get('GIT_USER')!,
+    GIT_PASSWORD: Deno.env.get('GIT_PASSWORD')!,
+    GIT_REPO: Deno.env.get('GIT_REPO')!,
+    GIT_HOST: Deno.env.get('GIT_HOST')!,
     DEV: isDev,
     PROD: isProd,
 };
