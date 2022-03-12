@@ -47,7 +47,7 @@ export async function commitFiles() {
     lines.pop();
 
     const files = lines.map((l) => ({
-        status: l.split(' ')[0].replace('??', 'ADD').replace('D', 'DEL'),
+        status: l.split(' ')[0].replace('D', 'DEL').replace('??', 'ADD'),
         path: l.slice(3),
     }));
 
