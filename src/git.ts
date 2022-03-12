@@ -15,7 +15,7 @@ function execGit(...args: string[]) {
 export async function initRepo() {
     try {
         //Pull if already cloned
-        pull();
+        await pull();
         //await pull();
     } catch (_) {
         //console.log(e);
@@ -25,18 +25,18 @@ export async function initRepo() {
             await execGit('clone', GIT_URL, gitPath);
         } catch (_) {
             Deno.removeSync(gitPath, { recursive: true });
-            execGit('clone', GIT_URL, gitPath);
+            await execGit('clone', GIT_URL, gitPath);
         }
     }
 }
 
 export function pull() {
-    return;
+    return execGit('pull');
 }
 
-export function commitFiles() {
-    execGit('add', '*');
-    return execGit('commit', '-m', 'Updated at ' + new Date().toLocaleString());
+export async function commitFiles() {
+    await execGit('add', '*');
+    return await execGit('commit', '-m', 'Updated at ' + new Date().toLocaleString());
 }
 
 export function push() {

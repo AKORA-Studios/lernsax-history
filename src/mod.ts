@@ -11,11 +11,11 @@ async function main() {
 
     if (!config.PROD) console.log('✅ - Repo up to date');
 
-    copyWebDAV();
+    await copyWebDAV();
     if (!config.PROD) console.log('✅ - Synced files');
 
-    commitFiles();
-    push();
+    await commitFiles();
+    await push();
     if (!config.PROD) console.log('✅ - Pushed to git');
 
     if (config.PROD) console.log('Finished', new Date().toLocaleString());
