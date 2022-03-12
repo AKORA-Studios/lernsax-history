@@ -28,10 +28,9 @@ COPY ./src ./src
 VOLUME [ "/app/git", "/app/files" ]
 
 # Set UP cron job
-RUN echo "deno run -A /app/src/mod.ts" > /app/start.sh \
-    && chmod +x /app/start.sh \
-    && touch /etc/crontabs/root \
-    && echo "* */6 * * * /app/start.sh" > /etc/crontabs/root \
+COPY ./start.sh ./start.sh
+COPY ./cron /etc/crontabs/root
+RUN chmod +x /app/start.sh \
     && chown root:root /etc/crontabs/root
 
 CMD [ "/usr/sbin/crond", "-f"]
