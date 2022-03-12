@@ -35,6 +35,6 @@ COPY ./cron /etc/crontabs/root
 RUN chmod +x /app/start.sh \
     && chown root:root /etc/crontabs/root
 
-ENTRYPOINT [ "/sbin/tini", "--" ]
+ENTRYPOINT [ "/sbin/tini","-vvv", "--" ]
 CMD [ "/app/start.sh" ]
 # CMD [ "/usr/sbin/crond", "-f"]
