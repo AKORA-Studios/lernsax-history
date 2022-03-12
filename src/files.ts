@@ -17,7 +17,7 @@ export async function copyWebDAV() {
             'rsync',
             '-rpt',
             '--delete',
-            '--max-size=2m',
+            '--max-size=5m',
             '--cvs-exclude', //ignores all files CVS ignores
             filesPath, // + '/' Doesnt create a "files" fodler in the git folder
             gitPath,
