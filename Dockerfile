@@ -6,11 +6,11 @@ ENV NODE_ENV production
 # Install git as dependency
 RUN apk fix
 RUN apk --no-cache add \
-    git=2.34.1-r0 \
-    git-lfs=3.0.2-r0 \
-    less=590-r0 \
-    openssh=8.8_p1-r1 \
-    rsync=3.2.3-r5 \
+    git=2.30.2-r0 \
+    git-lfs=2.13.1-r0 \
+    less=563-r0 \
+    openssh=8.4_p1-r4 \
+    rsync=3.2.3-r4 \
     && git lfs install
 
 # Configure git
