@@ -34,4 +34,5 @@ COPY ./cron /etc/crontabs/root
 RUN chmod +x /app/start.sh \
     && chown root:root /etc/crontabs/root
 
-CMD [ "/usr/sbin/crond", "-f"]
+CMD [ "/app/start.sh" ]
+# CMD [ "/usr/sbin/crond", "-f"]
