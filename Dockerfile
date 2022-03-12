@@ -38,6 +38,6 @@ RUN chmod +x /app/start.sh \
 
 
 
-ENTRYPOINT [ "/sbin/tini","-vv", "--", "bash", "/app/start.sh" ]
+ENTRYPOINT [ "/sbin/tini","-vv", "--", "sh", "/app/start.sh" ]
 # CMD [ "bash", "/app/start.sh" ]
 # CMD [ "/usr/sbin/crond", "-f"]
