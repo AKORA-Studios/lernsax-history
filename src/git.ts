@@ -23,17 +23,17 @@ async function execGit(...args: string[]) {
 export async function initRepo() {
     try {
         //Pull if already cloned
-        await execGit('pull');
+        console.log((await execGit('pull'))[1]);
     } catch (_) {
         //console.log(e);
         //Clone if not existing yet
         try {
             //await simpleGit(join(gitPath, '..')).clone(GIT_URL, gitPath);
-            await execGit('clone', GIT_URL, gitPath);
+            console.log((await execGit('clone', GIT_URL, gitPath))[1]);
         } catch (e) {
             console.log(e);
             Deno.removeSync(gitPath, { recursive: true });
-            await execGit('clone', GIT_URL, gitPath);
+            console.log((await execGit('clone', GIT_URL, gitPath))[1]);
         }
     }
 }
@@ -59,6 +59,6 @@ export async function commitFile(path: string, msg: string) {
     return await execGit('commit', '-m', `${msg} ${path}`);
 }
 
-export function push() {
-    return execGit('push');
+export async function push() {
+    console.log((await execGit('push'))[1]);
 }
