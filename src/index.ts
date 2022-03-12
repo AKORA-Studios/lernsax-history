@@ -1,4 +1,4 @@
-import { saveData } from './config.ts'; //Load env variables
+import './config.ts'; //Load env variables
 import './files.ts';
 
 import { commitFiles, initRepo, push } from './git.ts';
@@ -24,9 +24,9 @@ async function main() {
 }
 
 export function stop(err?: Error) {
-    saveData();
     //push();
     if (err) throw Error;
+    Deno.exit();
 }
 
 Deno.addSignalListener('SIGTERM', () => {

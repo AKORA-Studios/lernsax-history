@@ -1,7 +1,7 @@
 import config from './config.ts';
-import { __dirname } from './files.ts';
-import { join } from 'https://deno.land/std@0.129.0/path/mod.ts';
+import { dirname, fromFileUrl, join } from 'https://deno.land/std@0.129.0/path/mod.ts';
 
+export const __dirname = dirname(fromFileUrl(import.meta.url));
 export const gitPath = join(__dirname, '../git');
 
 const GIT_URL = `http://${config.GIT_USER}:${config.GIT_PASSWORD}@${config.GIT_HOST}/${config.GIT_REPO}`;
