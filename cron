@@ -1,1 +1,1 @@
-0 */6 * * * /app/start.sh
+0 */1 * * * /app/start.sh
