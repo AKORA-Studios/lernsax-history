@@ -9,6 +9,8 @@ async function execGit(...args: string[]) {
     const p = Deno.run({
         cmd: ['git', ...args],
         cwd: gitPath,
+        stdout: 'piped',
+        stderr: 'piped',
     });
 
     return await Promise.all([
