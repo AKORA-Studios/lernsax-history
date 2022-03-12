@@ -36,11 +36,6 @@ export function stop(err?: Error) {
     });
 }
 
-Deno.addSignalListener('SIGKILL', () => {
-    console.log('SIGKILL');
-    stop();
-});
-
 Deno.addSignalListener('SIGQUIT', () => {
     console.log('SIGQUIT');
     stop();
