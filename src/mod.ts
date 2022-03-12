@@ -5,6 +5,9 @@ import { commitFiles, initRepo, push } from './git.ts';
 import { copyWebDAV } from './files.ts';
 import { config } from './config.ts';
 
+let done = (_value: unknown) => {};
+const finished = new Promise((res) => (done = res));
+
 async function main() {
     if (config.PROD) console.log('Started', new Date().toLocaleString());
     await initRepo();
@@ -20,13 +23,17 @@ async function main() {
 
     if (config.PROD) console.log('Finished', new Date().toLocaleString(), '\n\n');
 
+    done('F');
     //await syncWebDAV();
 }
 
 export function stop(err?: Error) {
+    console.log('Stopping');
     //push();
-    if (err) throw Error;
-    Deno.exit();
+    finished.then(() => {
+        if (err) throw Error;
+        Deno.exit();
+    });
 }
 
 Deno.addSignalListener('SIGTERM', () => {
