@@ -1,9 +1,8 @@
-import { saveData } from './config'; //Load env variables
-import './files';
+import { config } from './config';
 
+import './files';
 import { commitFiles, initRepo, push } from './git';
 import { copyWebDAV } from './files';
-import { config } from './config';
 
 async function main() {
     if (config.PROD) console.log('Started', new Date().toLocaleString());
@@ -24,7 +23,6 @@ async function main() {
 }
 
 export async function stop(err?: Error) {
-    saveData();
     //push();
     if (err) throw Error;
 }

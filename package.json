@@ -10,13 +10,11 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "dotenv": "^16.0.0",
-        "md5": "^2.3.0"
+        "dotenv": "^16.0.0"
     },
     "devDependencies": {
         "@swc/cli": "^0.1.55",
         "@swc/core": "^1.2.153",
-        "@types/md5": "^2.3.2",
         "@types/node": "^16.11.26"
     }
 }

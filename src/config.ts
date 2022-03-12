@@ -1,8 +1,4 @@
 import { config as loadConfig } from 'dotenv';
-import md5 from 'md5';
-import { readFileSync, writeFileSync } from 'node:fs';
-import { writeFile } from 'node:fs/promises';
-import { join } from 'node:path';
 
 //Load enviroment variables
 loadConfig();
@@ -11,10 +7,7 @@ const isDev = process.env.NODE_ENV === 'development',
     isProd = process.env.NODE_ENV === 'production';
 
 export const config = {
-    USERNAME: process.env.LERNSAX_USERNAME!,
-    PASSWORD: process.env.LERNSAX_PASSWORD!,
     NODE_ENV: process.env.NODE_ENV as 'development' | 'production' | undefined,
-    WEBDAV_URL: process.env.LERNSAX_WEBDAV_URL!,
     GIT_USER: process.env.GIT_USER!,
     GIT_PASSWORD: process.env.GIT_PASSWORD!,
     GIT_REPO: process.env.GIT_REPO!,
@@ -23,51 +16,10 @@ export const config = {
     PROD: isProd,
 };
 
-if (!config.USERNAME) throw new Error('Username missing');
-if (!config.PASSWORD) throw new Error('Username missing');
-if (!config.WEBDAV_URL) throw new Error('WebDav URL missing');
+if (!config.GIT_USER) throw new Error('Username missing');
+if (!config.GIT_PASSWORD) throw new Error('Username missing');
+if (!config.GIT_HOST) throw new Error('GIT_HOST missing');
 
 export default config;
-
-//persistent Data
-let rawData;
-try {
-    readFileSync(join(__dirname, '../data.json'));
-    rawData = JSON.parse(readFileSync(join(__dirname, '../data.json')).toString());
-} catch (e) {
-    writeFileSync(join(__dirname, '../data.json'), '{}');
-    rawData = {};
-}
-
-type File = string;
-type Dir = { name: string; files: FileTree | null };
-type Entry = File | Dir;
-export type FileTree = Entry[];
-
-export const data = rawData as any as {
-    hash: string;
-    lastRun: Date;
-    /** FileTree */
-    filetree: FileTree;
-};
-
-const hash = md5(config.WEBDAV_URL + config.USERNAME + config.PASSWORD);
-
-data.lastRun ??= new Date(0);
-data.lastRun = new Date(data.lastRun);
-data.hash ??= hash;
-data.filetree ??= [];
-
-if (data.hash !== hash) throw new Error('This data file belongs to a diffrent configuration');
-
-export const scriptStart = new Date();
-export const lastRun = new Date(data.lastRun.getTime());
-
-export function saveData() {
-    data.lastRun = scriptStart;
-
-    return writeFile(join(__dirname, '../data.json'), JSON.stringify(data, null, 4));
-}
-saveData();
 
 console.log('✅ - Loaded config');
