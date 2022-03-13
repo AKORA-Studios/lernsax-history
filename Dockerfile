@@ -1,7 +1,7 @@
 FROM rust:1.59.0-alpine AS builder
 WORKDIR /usr/src/myapp
 COPY . .
-RUN cargo install --frozen --path . \
+RUN cargo install --path . \
     &&  ls /usr/local/
 
 FROM alpine:3.15.0 AS runner
