@@ -7,6 +7,7 @@ RUN cargo install --path . \
 FROM alpine:3.15.0 AS runner
 WORKDIR /
 RUN mkdir /files && mkdir /git 
+ENV NODE_ENV production
 
 # Install git as dependency
 RUN apk fix
