@@ -19,6 +19,9 @@ fn git_url() -> String {
 }
 
 fn exec_git(args: Vec<&str>) -> Output {
+    if config::envs().verbose {
+        println!("Exec git {:?}", args)
+    }
     let mut cmd = Command::new("git");
 
     cmd.current_dir(files::git_path())
@@ -29,7 +32,7 @@ fn exec_git(args: Vec<&str>) -> Output {
         cmd.arg(arg);
     }
 
-    return cmd.output().expect("Failed to execute command");
+    return cmd.output().expect("Failed to execute git command");
 }
 
 pub fn init_repo() {

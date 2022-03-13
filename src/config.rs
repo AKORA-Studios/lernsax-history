@@ -8,6 +8,7 @@ pub struct Config {
     pub git_host: String,
     pub dev: bool,
     pub prod: bool,
+    pub verbose: bool,
 }
 
 pub fn envs() -> Config {
@@ -17,6 +18,11 @@ pub fn envs() -> Config {
         git_password: env::var("GIT_PASSWORD").expect("GIT_PASSWORD missing"),
         git_repo: env::var("GIT_REPO").expect("GIT_REPO missing"),
         git_host: env::var("GIT_HOST").expect("GIT_HOST missing"),
+        verbose: if env::var("VERBOSE").unwrap_or("NO".to_string()) == "YES" {
+            true
+        } else {
+            false
+        },
         dev: if env::var("NODE_ENV").unwrap() == "development" {
             true
         } else {

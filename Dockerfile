@@ -9,6 +9,7 @@ WORKDIR /
 RUN mkdir /files && mkdir /git 
 ENV NODE_ENV production
 ENV RUST_BACKTRACE 1
+ENV VERBOSE YES
 
 # Install git as dependency
 RUN apk fix
