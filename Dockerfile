@@ -1,17 +1,20 @@
-FROM denoland/deno:alpine-1.19.2 AS runner
-WORKDIR /app
+FROM rust:1.59.0-alpine AS builder
+WORKDIR /usr/src/myapp
+COPY . .
+RUN cargo install --path .
 
-ENV NODE_ENV production
+FROM alpine:3.15.0 AS runner
+WORKDIR /
 
 # Install git as dependency
 RUN apk fix
 RUN apk --no-cache add \
     #    tini=0.19.0-r0  \
-    git=2.30.2-r0 \
-    git-lfs=2.13.1-r0 \
-    less=563-r0 \
-    openssh=8.4_p1-r4 \
-    rsync=3.2.3-r4 \
+    git=2.34.1-r0 \
+    git-lfs=3.0.2-r0 \
+    less=590-r0 \
+    openssh=8.8_p1-r1 \
+    rsync=3.2.3-r5 \
     && git lfs install
 
 # Configure git
@@ -19,12 +22,7 @@ RUN git config --global user.email "git-history@lernsax.de" \
     && git config --global user.name "Git History Bot" \
     && git config --global pull.ff only
 
-# Modules
-COPY ./src/deps.ts ./src/deps.ts
-RUN deno cache ./src/deps.ts
-
-# Copy all files -> KEEP .dockerignore UP TO DATE
-COPY ./src ./src
+COPY --from=builder /usr/local/cargo/bin/myapp /usr/local/bin/myapp
 
 # Volumes
 VOLUME [ "/app/git", "/app/files" ]
@@ -38,5 +36,5 @@ RUN chmod +x /app/start.sh \
 
 
 # ENTRYPOINT [ "/sbin/tini","-vv", "--", "sh", "/app/start.sh" ]
-#CMD [ "/app/start.sh" ]
-CMD [ "/usr/sbin/crond", "-f"]
+CMD [ "myapp" ]
+#CMD [ "/usr/sbin/crond", "-f"]

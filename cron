@@ -1,1 +1,1 @@
-*/10 * * * * /app/start.sh
+*/10 * * * * myapp
