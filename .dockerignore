@@ -9,6 +9,8 @@
 files/
 git/
 data.json
+test
+*.env
 
 # Docker
 *.yml
