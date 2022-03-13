@@ -2,6 +2,7 @@
 dist/
 maps/
 node_modules/
+/target
 
 # Secrets
 **/*.env
