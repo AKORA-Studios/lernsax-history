@@ -30,10 +30,10 @@ COPY --from=builder /usr/local/cargo/bin/lernsax-history /usr/local/bin/lernsax-
 VOLUME [ "/git", "/files" ]
 
 # Set UP cron job
-COPY ./start.sh ./start.sh
+#COPY ./start.sh ./start.sh
 COPY ./cron /etc/crontabs/root
-RUN chmod +x /app/start.sh \
-    && chown root:root /etc/crontabs/root
+#RUN chmod +x /app/start.sh \
+RUN chown root:root /etc/crontabs/root
 
 
 
