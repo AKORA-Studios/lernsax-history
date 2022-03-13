@@ -1,8 +1,7 @@
 FROM rust:1.59.0-alpine AS builder
 WORKDIR /usr/src/myapp
 COPY . .
-RUN cargo install --path . \
-    &&  ls /usr/local/
+RUN --mount=type=cache,target=/usr/src/myapp/target cargo install --path . 
 
 FROM alpine:3.15.0 AS runner
 WORKDIR /
