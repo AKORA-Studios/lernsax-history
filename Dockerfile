@@ -39,5 +39,5 @@ RUN chown root:root /etc/crontabs/root
 
 
 # ENTRYPOINT [ "/sbin/tini","-vv", "--", "sh", "/app/start.sh" ]
-CMD [ "lernsax-history" ]
-#CMD [ "/usr/sbin/crond", "-f"]
+#CMD [ "lernsax-history" ]
+CMD [ "/usr/sbin/crond", "-f"]
