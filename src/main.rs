@@ -1,13 +1,17 @@
+use chrono::DateTime;
+use chrono::Utc;
 use std::time::SystemTime;
+extern crate chrono;
 
 mod config; //Load env variables
 mod files;
 mod git;
 
 fn main() {
-    let d = SystemTime::now();
     if config::envs().prod {
-        println!("Started {:?}", d);
+        let system_time = SystemTime::now();
+        let datetime: DateTime<Utc> = system_time.into();
+        println!("Started {}", datetime.format("%d/%m/%Y %T"));
     }
     git::init_repo();
 
@@ -26,9 +30,10 @@ fn main() {
         println!("✅ - Pushed to git");
     }
 
-    let d = SystemTime::now();
     if config::envs().prod {
-        println!("Finished {:#?}\n\n", d);
+        let system_time = SystemTime::now();
+        let datetime: DateTime<Utc> = system_time.into();
+        println!("Finished {}\n\n", datetime);
     }
 
     //await syncWebDAV();
