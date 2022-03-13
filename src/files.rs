@@ -5,13 +5,17 @@ use std::process::Command;
 pub fn cwd() -> PathBuf {
     return env::current_dir().unwrap();
 }
+
+#[allow(dead_code)]
 pub fn files_path() -> PathBuf {
     return cwd().join("files");
 }
+
 pub fn git_path() -> PathBuf {
     return cwd().join("git");
 }
 
+#[allow(dead_code)]
 pub fn copy_web_dav() {
     println!("Start copying...");
 

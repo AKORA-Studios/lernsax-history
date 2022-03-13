@@ -12,11 +12,11 @@ pub struct Config {
 
 pub fn envs() -> Config {
     return Config {
-        node_env: env::var("NODE_ENV").unwrap(),
-        git_user: env::var("GIT_USER").unwrap(),
-        git_password: env::var("GIT_PASSWORD").unwrap(),
-        git_repo: env::var("GIT_REPO").unwrap(),
-        git_host: env::var("GIT_HOST").unwrap(),
+        node_env: env::var("NODE_ENV").expect("NODE_ENV missing"),
+        git_user: env::var("GIT_USER").expect("GIT_USER missing"),
+        git_password: env::var("GIT_PASSWORD").expect("GIT_PASSWORD missing"),
+        git_repo: env::var("GIT_REPO").expect("GIT_REPO missing"),
+        git_host: env::var("GIT_HOST").expect("GIT_HOST missing"),
         dev: if env::var("NODE_ENV").unwrap() == "development" {
             true
         } else {
