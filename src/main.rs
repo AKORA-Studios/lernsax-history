@@ -3,30 +3,30 @@ mod files;
 mod git;
 
 fn main() {
-    if (config.PROD) {
+    if (config::envs.PROD) {
         println!("Started", new Date().toLocaleString());
     }
     git::initRepo();
 
-    if (!config.PROD) {
+    if (!config::envs.PROD) {
         println!("✅ - Repo up to date");
     }
 
     files::copyWebDAV();
-    if (!config.PROD) {
+    if (!config::envs.PROD) {
         println!("✅ - Synced files");
     }
 
     git::commitFiles();
     git::push();
-    if (!config.PROD) {
+    if (!config::envs.PROD) {
         println!("✅ - Pushed to git");
     }
 
-    if (config.PROD) {
+    if (config::envs.PROD) {
         println!("Finished", new Date().toLocaleString(), "\n\n");
     }
 
-    done('F');
+    done("F");
     //await syncWebDAV();
 }

@@ -10,7 +10,7 @@ pub struct Config {
     pub PROD: bool,
 }
 
-static envs: Config = Config {
+pub static envs: Config = Config {
     NODE_ENV: env::var("NODE_ENV").unwrap(),
     GIT_USER: env::var("GIT_USER").unwrap(),
     GIT_PASSWORD: env::var("GIT_PASSWORD").unwrap(),

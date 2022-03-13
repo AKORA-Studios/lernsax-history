@@ -1,7 +1,9 @@
-mod git;
+use std::env;
+use std::path::PathBuf;
 
-let filesPath = join(__dirname, "../files");
-
+pub static cwd: PathBuf = env::current_dir().unwrap();
+pub static filesPath: PathBuf = cwd.join("files");
+pub static gitPath: PathBuf = cwd.join("git");
 
 /**
 try {
@@ -11,19 +13,20 @@ try {
 }
 */
 
-fn copyWebDAV() {
+pub fn copyWebDAV() {
     println!("Start copying...");
-
+    /*
     await Deno.run({
         cmd: [
-            'rsync',
-            '-rpt',
-            '--delete',
-            '--max-size=5m',
-            '--cvs-exclude', //ignores all files CVS ignores
-            filesPath, // + '/' Doesnt create a "files" fodler in the git folder
+            "rsync",
+            "-rpt",
+            "--delete",
+            "--max-size=5m",
+            "--cvs-exclude", //ignores all files CVS ignores
+            filesPath, // + "/" Doesnt create a "files" fodler in the git folder
             gitPath,
         ],
     }).status();
-    //await Deno.run({ cmd: ['ls', '-lah', gitPath] }).status();
+    */
+    //await Deno.run({ cmd: ["ls", "-lah", gitPath] }).status();
 }
