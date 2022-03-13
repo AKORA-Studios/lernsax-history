@@ -1,28 +1,28 @@
 use std::env;
 
 pub struct Config {
-    pub NODE_ENV: String,
-    pub GIT_USER: String,
-    pub GIT_PASSWORD: String,
-    pub GIT_REPO: String,
-    pub GIT_HOST: String,
-    pub DEV: bool,
-    pub PROD: bool,
+    pub node_env: String,
+    pub git_user: String,
+    pub git_password: String,
+    pub git_repo: String,
+    pub git_host: String,
+    pub dev: bool,
+    pub prod: bool,
 }
 
 pub fn envs() -> Config {
     return Config {
-        NODE_ENV: env::var("NODE_ENV").unwrap(),
-        GIT_USER: env::var("GIT_USER").unwrap(),
-        GIT_PASSWORD: env::var("GIT_PASSWORD").unwrap(),
-        GIT_REPO: env::var("GIT_REPO").unwrap(),
-        GIT_HOST: env::var("GIT_HOST").unwrap(),
-        DEV: if env::var("NODE_ENV").unwrap() == "development" {
+        node_env: env::var("NODE_ENV").unwrap(),
+        git_user: env::var("GIT_USER").unwrap(),
+        git_password: env::var("GIT_PASSWORD").unwrap(),
+        git_repo: env::var("GIT_REPO").unwrap(),
+        git_host: env::var("GIT_HOST").unwrap(),
+        dev: if env::var("NODE_ENV").unwrap() == "development" {
             true
         } else {
             false
         },
-        PROD: if env::var("NODE_ENV").unwrap() == "production" {
+        prod: if env::var("NODE_ENV").unwrap() == "production" {
             true
         } else {
             false

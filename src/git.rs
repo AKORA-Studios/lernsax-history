@@ -7,13 +7,13 @@ mod config;
 #[path = "./files.rs"]
 mod files;
 
-fn GIT_URL() -> String {
+fn git_url() -> String {
     return format!(
         "http://{}:{}@{}/{}",
-        config::envs().GIT_USER,
-        config::envs().GIT_PASSWORD,
-        config::envs().GIT_HOST,
-        config::envs().GIT_REPO
+        config::envs().git_user,
+        config::envs().git_password,
+        config::envs().git_host,
+        config::envs().git_repo
     );
 }
 
@@ -33,21 +33,21 @@ pub fn init_repo() {
     //Pull if already cloned
     exec_git(vec![
         "config",
-        format!("lfs.{}.git/info/lfs.locksverify", GIT_URL()).as_str(),
+        format!("lfs.{}.git/info/lfs.locksverify", git_url()).as_str(),
         "true",
     ]);
     let success = exec_git(vec!["pull"]);
     if !success.status.success() {
         let success = exec_git(vec![
             "clone",
-            GIT_URL().as_str(),
+            git_url().as_str(),
             files::git_path().to_str().unwrap(),
         ]);
         if !success.status.success() {
             //Deno.removeSync(gitPath, { recursive: true });
             let success = exec_git(vec![
                 "clone",
-                GIT_URL().as_str(),
+                git_url().as_str(),
                 files::git_path().to_str().unwrap(),
             ]);
             if !success.status.success() {
