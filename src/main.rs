@@ -1,10 +1,13 @@
+use std::time::SystemTime;
+
 mod config; //Load env variables
 mod files;
 mod git;
 
 fn main() {
+    let d = SystemTime::now();
     if !config::envs().prod {
-        println!("Started {}", "a");
+        println!("Started {:?}", d);
     }
     git::init_repo();
 
@@ -23,8 +26,9 @@ fn main() {
         println!("✅ - Pushed to git");
     }
 
+    let d = SystemTime::now();
     if config::envs().prod {
-        println!("Finished {} {}", "b", "\n\n");
+        println!("Finished {:?}\n\n", d);
     }
 
     //await syncWebDAV();
