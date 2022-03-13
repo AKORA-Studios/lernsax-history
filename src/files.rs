@@ -3,6 +3,7 @@ use std::path::PathBuf;
 use std::process::Command;
 use std::process::Stdio;
 
+#[allow(dead_code)]
 pub fn cwd() -> PathBuf {
     return env::current_dir().unwrap();
 }
