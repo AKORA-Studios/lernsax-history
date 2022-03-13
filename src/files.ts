@@ -1,4 +1,4 @@
-import { join, __dirname } from './deps.ts';
+import { __dirname, join } from './deps.ts';
 export const filesPath = join(__dirname, '../files');
 
 import { gitPath } from './git.ts';

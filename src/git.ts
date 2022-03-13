@@ -1,5 +1,5 @@
 import config from './config.ts';
-import { join, __dirname } from './deps.ts';
+import { __dirname, join } from './deps.ts';
 
 export const gitPath = join(__dirname, '../git');
 
@@ -51,7 +51,9 @@ export async function commitFiles() {
         path: l.slice(3),
     }));
 
-    for (const { path, status } of files) await commitFile(path, status.padStart(2));
+    for (const { path, status } of files) {
+        await commitFile(path, status.padStart(2));
+    }
 }
 
 export async function commitFile(path: string, msg: string) {
