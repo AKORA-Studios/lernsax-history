@@ -20,7 +20,7 @@ fn execGit(args: Vec<&str>) -> Output {
         .arg("Hello world")
         .current_dir(files::gitPath);
 
-    for (arg) in args.iter() {
+    for arg in args.iter() {
         cmd.arg(arg);
     }
 
@@ -35,20 +35,20 @@ pub fn initRepo() {
         "true",
     ]);
     let success = execGit(vec!["pull"]);
-    if (!success.status.success()) {
+    if !success.status.success() {
         let success = execGit(vec![
             "clone",
             GIT_URL.as_str(),
             files::gitPath.to_str().unwrap(),
         ]);
-        if (!success.status.success()) {
+        if !success.status.success() {
             //Deno.removeSync(gitPath, { recursive: true });
             let success = execGit(vec![
                 "clone",
                 GIT_URL.as_str(),
                 files::gitPath.to_str().unwrap(),
             ]);
-            if (!success.status.success()) {
+            if !success.status.success() {
                 //throw new Error("Git Failed");
             }
         }
@@ -67,26 +67,19 @@ pub fn commitFiles() {
 
     let output = cmd.output().unwrap();
     let string = str::from_utf8(&output.stdout).unwrap();
-    if (string == "") {
+    if string == "" {
         return;
     }
 
-    let lines = string.split("\n");
+    let lines: Vec<&str> = string.split("\n").collect();
     lines.pop();
 
     for line in lines {
-        line.replaceAll("\"", "");
-        commitFile(line.split(" ")[1], "A")
+        line.replace("\"", "");
+        line.replace("\"", "");
+        let (msg, path) = line.split_at(3);
+        commitFile(path, msg);
     }
-
-    /*
-    const files = lines.map((l) => ({
-        status: l.split(" ")[0].replace("D", "DEL").replace("??", "ADD"),
-        path: l.slice(3),
-    }));
-
-    for (const { path, status } of files) await commitFile(path, status.padStart(2));
-    */
 }
 
 fn commitFile(path: &str, msg: &str) {
