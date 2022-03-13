@@ -13,7 +13,7 @@ pub fn files_path() -> PathBuf {
 }
 
 pub fn git_path() -> PathBuf {
-    return PathBuf::from("/files");
+    return PathBuf::from("/git");
 }
 
 #[allow(dead_code)]
