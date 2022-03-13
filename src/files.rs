@@ -32,6 +32,7 @@ pub fn copy_web_dav() {
     ])
     .stdout(Stdio::inherit())
     .stderr(Stdio::inherit());
+    cmd.output().unwrap();
 
     //await Deno.run({ cmd: ["ls", "-lah", gitPath] }).status();
 }
