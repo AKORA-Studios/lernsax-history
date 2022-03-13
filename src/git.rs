@@ -20,7 +20,10 @@ fn git_url() -> String {
 
 fn exec_git(args: Vec<&str>) -> Output {
     if config::envs().verbose {
-        println!("Exec git {:?}", args)
+        println!("Exec git {:?}", args);
+        println!("CWD {:?}", files::cwd().to_str());
+        println!("GIT path {:?}", files::git_path().to_str());
+        println!("Files path {:?}", files::files_path().to_str())
     }
     let mut cmd = Command::new("/usr/bin/git");
 
