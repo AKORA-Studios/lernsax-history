@@ -1,18 +1,19 @@
-const isDev = Deno.env.get('NODE_ENV') === 'development',
-    isProd = Deno.env.get('NODE_ENV') === 'production';
+use std::env;
 
-export const config = {
-    NODE_ENV: Deno.env.get('NODE_ENV') as 'development' | 'production' | undefined,
-    GIT_USER: Deno.env.get('GIT_USER')!,
-    GIT_PASSWORD: Deno.env.get('GIT_PASSWORD')!,
-    GIT_REPO: Deno.env.get('GIT_REPO')!,
-    GIT_HOST: Deno.env.get('GIT_HOST')!,
-    DEV: isDev,
-    PROD: isProd,
-};
+pub struct Config {
+    pub NODE_ENV: String,
+    pub GIT_USER: String,
+    pub GIT_PASSWORD: String,
+    pub GIT_REPO: String,
+    pub GIT_HOST: String,
+    pub DEV: bool,
+    pub PROD: bool,
+}
 
-if (!config.GIT_USER) throw new Error('Username missing');
-if (!config.GIT_PASSWORD) throw new Error('Password missing');
-if (!config.GIT_HOST) throw new Error('GitHost missing');
+let envs = Config {
+    NODE_ENV: env::var("NODE_ENV").unwrap()
+}
 
-export default config;
+if (!config.GIT_USER) {throw new Error("Username missing");}
+if (!config.GIT_PASSWORD) throw new Error("Password missing");
+if (!config.GIT_HOST) throw new Error("GitHost missing");

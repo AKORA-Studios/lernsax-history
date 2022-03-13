@@ -1,16 +1,18 @@
-import { join, __dirname } from './deps.ts';
-export const filesPath = join(__dirname, '../files');
+mod git;
 
-import { gitPath } from './git.ts';
+let filesPath = join(__dirname, "../files");
 
+
+/**
 try {
     Deno.mkdirSync(filesPath);
 } catch (_) {
     /** */
 }
+*/
 
-export async function copyWebDAV() {
-    console.log('Start copying...');
+fn copyWebDAV() {
+    println!("Start copying...");
 
     await Deno.run({
         cmd: [

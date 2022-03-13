@@ -1,47 +1,32 @@
-import './config.ts'; //Load env variables
-import './files.ts';
+mod config; //Load env variables
+mod files;
+mod git;
 
-import { commitFiles, initRepo, push } from './git.ts';
-import { copyWebDAV } from './files.ts';
-import { config } from './config.ts';
+fn main() {
+    if (config.PROD) {
+        println!("Started", new Date().toLocaleString());
+    }
+    git::initRepo();
 
-let done = (_value: unknown) => {};
-const finished = new Promise((res) => (done = res));
+    if (!config.PROD) {
+        println!("✅ - Repo up to date");
+    }
 
-async function main() {
-    if (config.PROD) console.log('Started', new Date().toLocaleString());
-    await initRepo();
+    files::copyWebDAV();
+    if (!config.PROD) {
+        println!("✅ - Synced files");
+    }
 
-    if (!config.PROD) console.log('✅ - Repo up to date');
+    git::commitFiles();
+    git::push();
+    if (!config.PROD) {
+        println!("✅ - Pushed to git");
+    }
 
-    await copyWebDAV();
-    if (!config.PROD) console.log('✅ - Synced files');
-
-    await commitFiles();
-    await push();
-    if (!config.PROD) console.log('✅ - Pushed to git');
-
-    if (config.PROD) console.log('Finished', new Date().toLocaleString(), '\n\n');
+    if (config.PROD) {
+        println!("Finished", new Date().toLocaleString(), "\n\n");
+    }
 
     done('F');
     //await syncWebDAV();
 }
-
-export function stop(err?: Error) {
-    console.log('Stopping');
-    //push();
-    finished.then(() => {
-        if (err) throw Error;
-        Deno.exit();
-    });
-}
-
-Deno.addSignalListener('SIGQUIT', () => {
-    console.log('SIGQUIT');
-    stop();
-});
-
-Deno.addSignalListener('SIGTERM', () => {
-    console.log('SIGTERM');
-    stop();
-});
