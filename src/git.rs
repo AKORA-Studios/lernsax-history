@@ -79,7 +79,7 @@ pub fn commit_files() {
         .arg("status")
         .arg("--porcelain")
         .current_dir(files::git_path())
-        .stdout(Stdio::inherit())
+        //.stdout(Stdio::inherit())
         .stderr(Stdio::inherit())
         .output()
         .unwrap();
