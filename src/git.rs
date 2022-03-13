@@ -22,7 +22,7 @@ fn exec_git(args: Vec<&str>) -> Output {
     if config::envs().verbose {
         println!("Exec git {:?}", args)
     }
-    let mut cmd = Command::new("git");
+    let mut cmd = Command::new("/usr/bin/git");
 
     cmd.current_dir(files::git_path())
         .stdout(Stdio::inherit())
@@ -69,7 +69,7 @@ pub fn commit_files() {
      * ?? "path/test s.odp"
      */
 
-    let output = Command::new("git")
+    let output = Command::new("/usr/bin/git")
         .arg("status")
         .arg("--porcelain")
         .current_dir(files::git_path())

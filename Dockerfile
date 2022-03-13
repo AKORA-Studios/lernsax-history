@@ -38,7 +38,7 @@ COPY ./cron /etc/crontabs/root
 #RUN chmod +x /app/start.sh \
 RUN chown root:root /etc/crontabs/root
 
-
+RUN which git
 
 # ENTRYPOINT [ "/sbin/tini","-vv", "--", "sh", "/app/start.sh" ]
 #CMD [ "lernsax-history" ]

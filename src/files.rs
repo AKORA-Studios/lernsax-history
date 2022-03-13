@@ -20,9 +20,8 @@ pub fn git_path() -> PathBuf {
 pub fn copy_web_dav() {
     println!("Start copying...");
 
-    let mut cmd = Command::new("rsync");
+    let mut cmd = Command::new("/usr/bin/rsync");
     cmd.args([
-        "rsync",
         "-rpt",
         "--delete",
         "--max-size=5m",
