@@ -1,5 +1,6 @@
 use std::process::Command;
 use std::process::Output;
+use std::process::Stdio;
 use std::str;
 
 #[path = "./config.rs"]
@@ -20,7 +21,9 @@ fn git_url() -> String {
 fn exec_git(args: Vec<&str>) -> Output {
     let mut cmd = Command::new("git");
 
-    cmd.arg("Hello world").current_dir(files::git_path());
+    cmd.current_dir(files::git_path())
+        .stdout(Stdio::inherit())
+        .stderr(Stdio::inherit());
 
     for arg in args.iter() {
         cmd.arg(arg);

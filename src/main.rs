@@ -6,7 +6,7 @@ mod git;
 
 fn main() {
     let d = SystemTime::now();
-    if !config::envs().prod {
+    if config::envs().prod {
         println!("Started {:?}", d);
     }
     git::init_repo();
