@@ -75,7 +75,7 @@ pub fn commit_files() {
      * ?? "path/test s.odp"
      */
 
-    let output = Command::new("/usr/bin/git")
+    let output = Command::new("git")
         .arg("status")
         .arg("--porcelain")
         .current_dir(files::git_path())
@@ -84,6 +84,7 @@ pub fn commit_files() {
         .output()
         .unwrap();
     let string = str::from_utf8(&output.stdout).unwrap();
+    println!("Git diff: {}", string);
     if string == "" {
         return;
     }
