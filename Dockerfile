@@ -1,7 +1,8 @@
 FROM rust:1.59.0-alpine AS builder
 WORKDIR /usr/src/myapp
 COPY . .
-RUN --mount=type=cache,target=/usr/src/myapp/target cargo install --path . 
+# BuildKit -> --mount=type=cache,target=/usr/src/myapp/target 
+RUN cargo install --path . 
 
 FROM alpine:3.15.0 AS runner
 WORKDIR /
@@ -36,8 +37,6 @@ VOLUME [ "/git", "/files" ]
 COPY ./cron /etc/crontabs/root
 #RUN chmod +x /app/start.sh \
 RUN chown root:root /etc/crontabs/root
-
-RUN which git
 
 # ENTRYPOINT [ "/sbin/tini","-vv", "--", "sh", "/app/start.sh" ]
 #CMD [ "lernsax-history" ]
