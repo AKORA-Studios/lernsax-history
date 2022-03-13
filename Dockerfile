@@ -5,6 +5,7 @@ RUN cargo install --path .
 
 FROM alpine:3.15.0 AS runner
 WORKDIR /
+RUN mkdir /files && mkdir /git 
 
 # Install git as dependency
 RUN apk fix
@@ -25,7 +26,7 @@ RUN git config --global user.email "git-history@lernsax.de" \
 COPY --from=builder /usr/local/cargo/bin/myapp /usr/local/bin/myapp
 
 # Volumes
-VOLUME [ "/app/git", "/app/files" ]
+VOLUME [ "/git", "/files" ]
 
 # Set UP cron job
 COPY ./start.sh ./start.sh

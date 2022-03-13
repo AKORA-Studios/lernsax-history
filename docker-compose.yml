@@ -11,8 +11,8 @@ services:
     env_file:
       - .env
     volumes:
-      - ./files:/app/files:ro
-      - lernsax_git:/app/git
+      - ./files:/files:ro
+      - lernsax_git:/git
     networks:
       - lernsax
 
