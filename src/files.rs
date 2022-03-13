@@ -9,11 +9,11 @@ pub fn cwd() -> PathBuf {
 
 #[allow(dead_code)]
 pub fn files_path() -> PathBuf {
-    return cwd().join("files");
+    return PathBuf::from("/files");
 }
 
 pub fn git_path() -> PathBuf {
-    return cwd().join("git");
+    return PathBuf::from("/files");
 }
 
 #[allow(dead_code)]
