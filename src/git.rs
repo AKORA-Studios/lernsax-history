@@ -104,7 +104,12 @@ fn commit_file(path: &str, msg: &str) {
     exec_git(vec![
         "commit",
         "-m",
-        format!("{} {}", msg, path.split_at(6).1).as_str(),
+        format!(
+            "{} {}",
+            msg,
+            path.replace("@manos-dresden.lernsax.de", "").split_at(6).1
+        )
+        .as_str(),
     ]);
 }
 
