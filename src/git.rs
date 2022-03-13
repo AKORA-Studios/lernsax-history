@@ -84,7 +84,7 @@ pub fn commit_files() {
         .output()
         .unwrap();
     let string = str::from_utf8(&output.stdout).unwrap();
-    println!("Git diff: {}", string);
+    println!("{}", string);
     if string == "" {
         return;
     }
@@ -101,7 +101,11 @@ pub fn commit_files() {
 
 fn commit_file(path: &str, msg: &str) {
     exec_git(vec!["add", path]);
-    exec_git(vec!["commit", "-m", format!("{} {}", msg, path).as_str()]);
+    exec_git(vec![
+        "commit",
+        "-m",
+        format!("{} {}", msg, path.split_at(6).1).as_str(),
+    ]);
 }
 
 pub fn push() {
