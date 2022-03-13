@@ -28,7 +28,7 @@ fn main() {
 
     let d = SystemTime::now();
     if config::envs().prod {
-        println!("Finished {:?}\n\n", d);
+        println!("Finished {:#?}\n\n", d);
     }
 
     //await syncWebDAV();
