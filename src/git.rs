@@ -7,18 +7,20 @@ mod config;
 #[path = "./files.rs"]
 mod files;
 
-static GIT_URL: String = format!(
-    "http://{}:{}@{}/{}",
-    config::envs.GIT_USER,
-    config::envs.GIT_PASSWORD,
-    config::envs.GIT_HOST,
-    config::envs.GIT_REPO
-);
+fn GIT_URL() -> String {
+    return format!(
+        "http://{}:{}@{}/{}",
+        config::envs().GIT_USER,
+        config::envs().GIT_PASSWORD,
+        config::envs().GIT_HOST,
+        config::envs().GIT_REPO
+    );
+}
 
-fn execGit(args: Vec<&str>) -> Output {
-    let cmd = Command::new("git")
-        .arg("Hello world")
-        .current_dir(files::gitPath);
+fn exec_git(args: Vec<&str>) -> Output {
+    let mut cmd = Command::new("git");
+
+    cmd.arg("Hello world").current_dir(files::git_path());
 
     for arg in args.iter() {
         cmd.arg(arg);
@@ -27,26 +29,26 @@ fn execGit(args: Vec<&str>) -> Output {
     return cmd.output().expect("Failed to execute command");
 }
 
-pub fn initRepo() {
+pub fn init_repo() {
     //Pull if already cloned
-    execGit([
+    exec_git(vec![
         "config",
-        format!("lfs.{}.git/info/lfs.locksverify", GIT_URL),
+        format!("lfs.{}.git/info/lfs.locksverify", GIT_URL()).as_str(),
         "true",
     ]);
-    let success = execGit(vec!["pull"]);
+    let success = exec_git(vec!["pull"]);
     if !success.status.success() {
-        let success = execGit(vec![
+        let success = exec_git(vec![
             "clone",
-            GIT_URL.as_str(),
-            files::gitPath.to_str().unwrap(),
+            GIT_URL().as_str(),
+            files::git_path().to_str().unwrap(),
         ]);
         if !success.status.success() {
             //Deno.removeSync(gitPath, { recursive: true });
-            let success = execGit(vec![
+            let success = exec_git(vec![
                 "clone",
-                GIT_URL.as_str(),
-                files::gitPath.to_str().unwrap(),
+                GIT_URL().as_str(),
+                files::git_path().to_str().unwrap(),
             ]);
             if !success.status.success() {
                 //throw new Error("Git Failed");
@@ -55,38 +57,38 @@ pub fn initRepo() {
     }
 }
 
-pub fn commitFiles() {
+pub fn commit_files() {
     /* git status --porcelain
      *  D path/calendar.ics
      * ?? "path/test s.odp"
      */
-    let cmd = Command::new("git")
+
+    let output = Command::new("git")
         .arg("status")
         .arg("--porcelain")
-        .current_dir(files::gitPath);
-
-    let output = cmd.output().unwrap();
+        .current_dir(files::git_path())
+        .output()
+        .unwrap();
     let string = str::from_utf8(&output.stdout).unwrap();
     if string == "" {
         return;
     }
 
-    let lines: Vec<&str> = string.split("\n").collect();
+    let mut lines: Vec<&str> = string.split("\n").collect();
     lines.pop();
 
     for line in lines {
-        line.replace("\"", "");
-        line.replace("\"", "");
-        let (msg, path) = line.split_at(3);
-        commitFile(path, msg);
+        let tmp = line.replace("\"", "").replace("\"", "");
+        let (msg, path) = tmp.split_at(3);
+        commit_file(path, msg);
     }
 }
 
-fn commitFile(path: &str, msg: &str) {
-    execGit(vec!["add", path]);
-    execGit(vec!["commit", "-m", format!("{} {}", msg, path)]);
+fn commit_file(path: &str, msg: &str) {
+    exec_git(vec!["add", path]);
+    exec_git(vec!["commit", "-m", format!("{} {}", msg, path).as_str()]);
 }
 
 pub fn push() {
-    execGit(vec!["push"]);
+    exec_git(vec!["push"]);
 }

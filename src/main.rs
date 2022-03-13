@@ -3,27 +3,27 @@ mod files;
 mod git;
 
 fn main() {
-    if !config::envs.PROD {
+    if !config::envs().PROD {
         println!("Started {}", "a");
     }
-    git::initRepo();
+    git::init_repo();
 
-    if !config::envs.PROD {
+    if !config::envs().PROD {
         println!("✅ - Repo up to date");
     }
 
-    files::copyWebDAV();
-    if !config::envs.PROD {
+    files::copy_web_dav();
+    if !config::envs().PROD {
         println!("✅ - Synced files");
     }
 
-    git::commitFiles();
+    git::commit_files();
     git::push();
-    if !config::envs.PROD {
+    if !config::envs().PROD {
         println!("✅ - Pushed to git");
     }
 
-    if config::envs.PROD {
+    if config::envs().PROD {
         println!("Finished {} {}", "b", "\n\n");
     }
 

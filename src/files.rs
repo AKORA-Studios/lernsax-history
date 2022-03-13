@@ -1,19 +1,17 @@
 use std::env;
 use std::path::PathBuf;
 
-pub static cwd: PathBuf = env::current_dir().unwrap();
-pub static filesPath: PathBuf = cwd.join("files");
-pub static gitPath: PathBuf = cwd.join("git");
-
-/**
-try {
-    Deno.mkdirSync(filesPath);
-} catch (_) {
-    /** */
+pub fn cwd() -> PathBuf {
+    return env::current_dir().unwrap();
 }
-*/
+pub fn files_path() -> PathBuf {
+    return cwd().join("files");
+}
+pub fn git_path() -> PathBuf {
+    return cwd().join("git");
+}
 
-pub fn copyWebDAV() {
+pub fn copy_web_dav() {
     println!("Start copying...");
     /*
     await Deno.run({
