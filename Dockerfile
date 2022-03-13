@@ -8,6 +8,7 @@ FROM alpine:3.15.0 AS runner
 WORKDIR /
 RUN mkdir /files && mkdir /git 
 ENV NODE_ENV production
+ENV RUST_BACKTRACE 1
 
 # Install git as dependency
 RUN apk fix
