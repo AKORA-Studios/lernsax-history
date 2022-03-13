@@ -1,7 +1,8 @@
 FROM rust:1.59.0-alpine AS builder
 WORKDIR /usr/src/myapp
 COPY . .
-RUN cargo install --path .
+RUN cargo install --path . \
+    &&  ls /usr/local/
 
 FROM alpine:3.15.0 AS runner
 WORKDIR /
@@ -23,7 +24,7 @@ RUN git config --global user.email "git-history@lernsax.de" \
     && git config --global user.name "Git History Bot" \
     && git config --global pull.ff only
 
-COPY --from=builder /usr/local/cargo/bin/myapp /usr/local/bin/myapp
+COPY --from=builder /usr/local/cargo/bin/lernsax-history /usr/local/bin/lernsax-history
 
 # Volumes
 VOLUME [ "/git", "/files" ]
@@ -37,5 +38,5 @@ RUN chmod +x /app/start.sh \
 
 
 # ENTRYPOINT [ "/sbin/tini","-vv", "--", "sh", "/app/start.sh" ]
-CMD [ "myapp" ]
+CMD [ "lernsax-history" ]
 #CMD [ "/usr/sbin/crond", "-f"]
