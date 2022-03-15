@@ -107,7 +107,7 @@ fn commit_file(path: &str, msg: &str) {
         format!(
             "{} {}",
             msg,
-            path.replace("@manos-dresden.lernsax.de", "").split_at(6).1
+            path.replace(config::envs().mask.as_str(), "").split_at(6).1
         )
         .as_str(),
     ]);

@@ -12,6 +12,7 @@ pub struct Config {
     pub vplan_url: String,
     pub vplan_user: String,
     pub vplan_pass: String,
+    pub mask: String,
 }
 
 pub fn envs() -> Config {
@@ -24,6 +25,7 @@ pub fn envs() -> Config {
         vplan_url: env::var("VPLAN_URL").expect("VPLAN_URL missing"),
         vplan_user: env::var("VPLAN_USER").expect("VPLAN_USER missing"),
         vplan_pass: env::var("VPLAN_PASS").expect("VPLAN_PASS missing"),
+        mask: env::var("MASK").expect("MASK missing"),
         verbose: if env::var("VERBOSE").unwrap_or("NO".to_string()) == "YES" {
             true
         } else {

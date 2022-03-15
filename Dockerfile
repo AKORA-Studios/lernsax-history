@@ -20,6 +20,7 @@ RUN apk --no-cache add \
     less=590-r0 \
     openssh=8.8_p1-r1 \
     rsync=3.2.3-r5 \
+    wget=1.21.2-r2 \
     ca-certificates=20211220-r0 \
     && git lfs install
 
