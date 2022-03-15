@@ -9,6 +9,9 @@ pub struct Config {
     pub dev: bool,
     pub prod: bool,
     pub verbose: bool,
+    pub vplan_url: String,
+    pub vplan_user: String,
+    pub vplan_pass: String,
 }
 
 pub fn envs() -> Config {
@@ -18,6 +21,9 @@ pub fn envs() -> Config {
         git_password: env::var("GIT_PASSWORD").expect("GIT_PASSWORD missing"),
         git_repo: env::var("GIT_REPO").expect("GIT_REPO missing"),
         git_host: env::var("GIT_HOST").expect("GIT_HOST missing"),
+        vplan_url: env::var("VPLAN_URL").expect("VPLAN_URL missing"),
+        vplan_user: env::var("VPLAN_USER").expect("VPLAN_USER missing"),
+        vplan_pass: env::var("VPLAN_PASS").expect("VPLAN_PASS missing"),
         verbose: if env::var("VERBOSE").unwrap_or("NO".to_string()) == "YES" {
             true
         } else {

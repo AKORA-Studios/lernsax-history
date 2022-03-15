@@ -24,6 +24,11 @@ fn main() {
         println!("✅ - Synced files");
     }
 
+    files::download_vplan();
+    if !config::envs().prod {
+        println!("✅ - Downloaded VPlan");
+    }
+
     git::commit_files();
     git::push();
     if !config::envs().prod {
