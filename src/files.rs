@@ -56,7 +56,7 @@ pub fn download_vplan() {
         pass_arg.as_str(),
         config::envs().vplan_url.as_str(),
         "-O",
-        "/files/vplan.json", //ignores all files CVS ignores
+        "/git/vplan.json", //ignores all files CVS ignores
     ])
     .stdout(Stdio::inherit())
     .stderr(Stdio::inherit());
