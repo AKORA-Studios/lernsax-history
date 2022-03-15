@@ -41,8 +41,19 @@ pub fn copy_web_dav() {
 }
 
 #[allow(dead_code)]
-pub fn download_vplan() {
-    println!("Downloading...");
+// https://manos-dresden.de/vplan/upload/current/students.json
+// https://manos-dresden.de/vplan/upload/next/students.json
+
+pub fn download_vplans() {
+    download_vplan(config::envs().vplan_url.as_str(), "/git/vplan.json");
+    download_vplan(
+        config::envs().vplan_url.replace("next", "current").as_str(),
+        "/git/current_vplan.json",
+    );
+}
+
+fn download_vplan(url: &str, file_path: &str) {
+    println!("Downloading {}...", file_path);
 
     let mut user_arg: String = "--user=".to_owned();
     user_arg.push_str(config::envs().vplan_user.as_str());
@@ -54,9 +65,9 @@ pub fn download_vplan() {
         "-q",
         user_arg.as_str(),
         pass_arg.as_str(),
-        config::envs().vplan_url.as_str(),
+        url,
         "-O",
-        "/git/vplan.json", //ignores all files CVS ignores
+        file_path, //ignores all files CVS ignores
     ])
     .stdout(Stdio::inherit())
     .stderr(Stdio::inherit());

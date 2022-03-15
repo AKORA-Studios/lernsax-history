@@ -24,7 +24,7 @@ fn main() {
         println!("✅ - Synced files");
     }
 
-    files::download_vplan();
+    files::download_vplans();
     if !config::envs().prod {
         println!("✅ - Downloaded VPlan");
     }
