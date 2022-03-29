@@ -107,7 +107,8 @@ fn commit_file(path: &str, msg: &str) {
         format!(
             "{} {}",
             msg,
-            path.replace(config::envs().mask.as_str(), "").split_at(6).1
+            path.replace(config::envs().mask.as_str(), "")
+                .replace("files/", "")
         )
         .as_str(),
     ]);
