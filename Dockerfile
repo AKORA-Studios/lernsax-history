@@ -26,7 +26,7 @@ RUN apk --no-cache add \
 
 # Configure git
 RUN git config --global user.email "git-history@lernsax.de" \
-    && git config --global user.name "Git History Bot" \
+    && git config --global user.name "Lernsax" \
     && git config --global pull.ff only
 
 COPY --from=builder /usr/local/cargo/bin/lernsax-history /usr/local/bin/lernsax-history
