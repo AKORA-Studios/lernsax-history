@@ -1,24 +1,24 @@
 
 # Configs
 .prettierrc
-*.env
+**/*.env
 .gitattributes
 .gitignore
 
 # Runtime
-files/
-git/
-data.json
-test
+**/files/
+**/git/
+**/data.json
+**/test
 *.env
 
 # Docker
 *.yml
-Dockerfile
+**/Dockerfile
 
 
 # Build
-node_modules/
-maps/
-dist/
-target/
+**/node_modules/
+**/maps/
+**/dist/
+**/target/

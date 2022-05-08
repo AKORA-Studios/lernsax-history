@@ -4,7 +4,7 @@ COPY . .
 # BuildKit -> --mount=type=cache,target=/usr/src/myapp/target 
 RUN cargo install --path . 
 
-FROM alpine:latest AS runner
+FROM alpine:edge AS runner
 WORKDIR /
 RUN mkdir /files && mkdir /git 
 ENV NODE_ENV production

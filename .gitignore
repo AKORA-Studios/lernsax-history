@@ -1,13 +1,14 @@
 # Build
-dist/
-maps/
-node_modules/
-/target
+**/dist/
+**/maps/
+**/node_modules/
+**/target
 
 # Secrets
 **/*.env
+**/*.p8
 
 # Runtime
 data.json
-files/
-git/
+**/files/
+**/git/

@@ -1,12 +1,19 @@
 networks:
-    lernsax:
-      name: lernsax
+    lernsax_sync:
+      name: lernsax_sync
       external: true
 
 services:
-  app:
-    build: .
-    container_name: lernsax_history
+  apns_bridge:
+    build: "./apns_bridge/Dockerfile"
+    container_name: lernsax_apns
+    env_file:
+      - .env
+    networks:
+      - lernsax_sync
+  sync_server:
+    build: "./sync-server/Dockerfile"
+    container_name: lernsax_sync
     restart: unless-stopped
     env_file:
       - .env
@@ -14,7 +21,7 @@ services:
       - ./files:/files:ro
       - lernsax_git:/git
     networks:
-      - lernsax
+      - lernsax_sync
 
 volumes:
   lernsax_git:
