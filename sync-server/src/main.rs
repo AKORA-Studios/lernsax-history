@@ -7,7 +7,8 @@ mod config; //Load env variables
 mod files;
 mod git;
 
-fn main() {
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     if config::envs().prod {
         let system_time = SystemTime::now();
         let datetime: DateTime<Utc> = system_time.into();
@@ -41,5 +42,8 @@ fn main() {
         println!("Finished {}\n\n", datetime);
     }
 
+    let _resp = reqwest::get("https://apns_bridge:3000/new_next").await?;
+
     //await syncWebDAV();
+    Ok(())
 }

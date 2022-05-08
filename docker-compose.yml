@@ -6,6 +6,7 @@ networks:
 services:
   apns_bridge:
     build: "./apns_bridge/Dockerfile"
+    restart: always
     container_name: lernsax_apns
     env_file:
       - .env
@@ -14,6 +15,8 @@ services:
   sync_server:
     build: "./sync-server/Dockerfile"
     container_name: lernsax_sync
+    depends_on:
+      - apns_bridge
     restart: unless-stopped
     env_file:
       - .env
