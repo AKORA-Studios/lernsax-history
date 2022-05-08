@@ -1,10 +1,18 @@
-FROM rust:1.59.0-alpine AS builder
+FROM rust:1.60.0-alpine AS builder
 WORKDIR /usr/src/myapp
+RUN apk add \
+    pkgconfig \
+    openssl=1.1.1n-r0 \ 
+    openssl-dev=1.1.1n-r0
+# gcc musl-dev rustup
+
 COPY . .
 # BuildKit -> --mount=type=cache,target=/usr/src/myapp/target 
+
+
 RUN cargo install --path . 
 
-FROM alpine:edge AS runner
+FROM alpine:3.15 AS runner
 WORKDIR /
 RUN mkdir /files && mkdir /git 
 ENV NODE_ENV production
@@ -19,6 +27,9 @@ RUN apk --no-cache add \
     git-lfs=3.0.2-r0 \
     less=590-r0 \
     openssh=8.8_p1-r1 \
+    pkgconfig \
+    openssl=1.1.1n-r0 \ 
+    openssl-dev=1.1.1n-r0 \
     rsync=3.2.3-r5 \
     wget=1.21.2-r2 \
     ca-certificates=20211220-r0 \
