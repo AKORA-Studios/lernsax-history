@@ -112,7 +112,12 @@ fn commit_file(path: &str, msg: &str) {
         )
         .as_str(),
     ]);
-    let _res = ureq::get("https://apns_bridge:3000/new_next").call();
+
+    if path.contains("current_vplan.json") {
+        let _res = ureq::get("https://apns_bridge:3000/new_current").call();
+    } else if path.contains("vplan.json") {
+        let _res = ureq::get("https://apns_bridge:3000/new_next").call();
+    }
 }
 
 pub fn push() {
