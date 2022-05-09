@@ -2,28 +2,26 @@ name: Go
 
 on:
   push:
-    branches: [ rust ]
+    branches: [rust]
   pull_request:
-    branches: [ rust ]
+    branches: [rust]
 
 defaults:
   run:
     working-directory: apns_bridge
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Go
-      uses: actions/setup-go@v3
-      with:
-        go-version: 1.18
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
 
-    - name: Build
-      run: go build -v ./...
-
+      - name: Build
+        run: go build -v -o ./app ./...
 #    - name: Test
 #      run: go test -v ./...
