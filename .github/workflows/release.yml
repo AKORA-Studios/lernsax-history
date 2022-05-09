@@ -1,45 +1,49 @@
 name: Release
 
 on:
-    push:
-        tags:
-            - '*'
+  push:
+    tags:
+      - "*"
+
+defaults:
+  run:
+    working-directory: sync-server
 
 jobs:
-    build:
-        name: Build for ${{ matrix.os }}
-        runs-on: ${{ matrix.os }}
-        strategy:
-            matrix:
-                name: [linux, windows, macos]
+  build:
+    name: Build for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        name: [linux, windows, macos]
 
-                include:
-                    - name: linux
-                      os: ubuntu-latest
-                      artifact_name: target/release/lernsax-history
-                      asset_name: lernsax-history-linux
-                    - name: windows
-                      os: windows-latest
-                      artifact_name: target/release/lernsax-history.exe
-                      asset_name: lernsax-history-windows
-                    - name: macos
-                      os: macos-latest
-                      artifact_name: target/release/lernsax-history
-                      asset_name: lernsax-history-macos
+        include:
+          - name: linux
+            os: ubuntu-latest
+            artifact_name: target/release/lernsax-history
+            asset_name: lernsax-history-linux
+          - name: windows
+            os: windows-latest
+            artifact_name: target/release/lernsax-history.exe
+            asset_name: lernsax-history-windows
+          - name: macos
+            os: macos-latest
+            artifact_name: target/release/lernsax-history
+            asset_name: lernsax-history-macos
 
-        steps:
-            - uses: actions/checkout@v1
+    steps:
+      - uses: actions/checkout@v1
 
-            - uses: actions-rs/toolchain@v1
-              with:
-                  profile: minimal
-                  toolchain: stable
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
 
-            - name: Build
-              run: cargo build --release --locked
+      - name: Build
+        run: cargo build --release --locked
 
-            - name: Upload binaries to release
-              uses: actions/upload-artifact@v2
-              with:
-                  name: ${{ matrix.asset_name }}
-                  path: ${{ matrix.artifact_name }}
+      - name: Upload binaries to release
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.asset_name }}
+          path: ${{ matrix.artifact_name }}
