@@ -1,9 +1,9 @@
 FROM rust:1.60.0-alpine AS builder
 WORKDIR /usr/src/myapp
-RUN apk add \
-    pkgconfig \
-    openssl=1.1.1n-r0 \ 
-    openssl-dev=1.1.1n-r0
+# RUN apk add \
+#    pkgconfig \
+#    openssl=1.1.1n-r0 \ 
+#    openssl-dev=1.1.1n-r0
 # gcc musl-dev rustup
 
 COPY . .
@@ -27,9 +27,9 @@ RUN apk --no-cache add \
     git-lfs=3.0.2-r0 \
     less=590-r0 \
     openssh=8.8_p1-r1 \
-    pkgconfig \
-    openssl=1.1.1n-r0 \ 
-    openssl-dev=1.1.1n-r0 \
+    #     pkgconfig \
+    #     openssl=1.1.1n-r0 \ 
+    #     openssl-dev=1.1.1n-r0 \
     rsync=3.2.3-r5 \
     wget=1.21.2-r2 \
     ca-certificates=20211220-r0 \
