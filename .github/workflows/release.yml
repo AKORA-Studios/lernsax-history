@@ -1,13 +1,14 @@
-name: Release
+name: Rust Release
 
 on:
   push:
-    tags:
-      - "*"
+    branches: [rust]
+  pull_request:
+    branches: [rust]
 
 defaults:
   run:
-    working-directory: sync-server
+    working-directory: sync_server
 
 jobs:
   build:

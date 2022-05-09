@@ -13,7 +13,7 @@ services:
     networks:
       - lernsax_sync
   sync_server:
-    build: "./sync-server/"
+    build: "./sync_server/"
     container_name: lernsax_sync
     depends_on:
       - apns_bridge
