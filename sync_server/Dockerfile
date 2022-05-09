@@ -24,7 +24,7 @@ RUN apk fix
 RUN apk --no-cache add \
     #    tini=0.19.0-r0  \
     git=2.34.1-r0 \
-    git-lfs=3.0.2-r0 \
+    git-lfs=3.0.2-r1 \
     less=590-r0 \
     openssh=8.8_p1-r1 \
     #     pkgconfig \
