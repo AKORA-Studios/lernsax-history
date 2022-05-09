@@ -112,6 +112,7 @@ fn commit_file(path: &str, msg: &str) {
         )
         .as_str(),
     ]);
+    let _res = ureq::get("https://apns_bridge:3000/new_next").call();
 }
 
 pub fn push() {
