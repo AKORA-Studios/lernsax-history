@@ -117,9 +117,9 @@ fn commit_file(path: &str, msg: &str) {
     if path.contains("vplan.json") {
         //Need to make push notification
         let url = if path.contains("current") {
-            "https://apns_bridge:3000/new_current"
+            "http://apns_bridge:3000/new_current"
         } else {
-            "https://apns_bridge:3000/new_next"
+            "http://apns_bridge:3000/new_next"
         };
         match ureq::get(url).call() {
             Ok(_response) => {
