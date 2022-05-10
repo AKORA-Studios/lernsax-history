@@ -2,6 +2,7 @@ use std::process::Command;
 use std::process::Output;
 use std::process::Stdio;
 use std::str;
+use ureq::Error;
 
 #[path = "./config.rs"]
 mod config;
@@ -113,10 +114,27 @@ fn commit_file(path: &str, msg: &str) {
         .as_str(),
     ]);
 
-    if path.contains("current_vplan.json") {
-        let _res = ureq::get("https://apns_bridge:3000/new_current").call();
-    } else if path.contains("vplan.json") {
-        let _res = ureq::get("https://apns_bridge:3000/new_next").call();
+    if path.contains("vplan.json") {
+        //Need to make push notification
+        let url = if path.contains("current") {
+            "https://apns_bridge:3000/new_current"
+        } else {
+            "https://apns_bridge:3000/new_next"
+        };
+        match ureq::get(url).call() {
+            Ok(_response) => {
+                println!("Created APNS Notification")
+            }
+            Err(Error::Status(code, _response)) => {
+                /* the server returned an unexpected status
+                code (such as 400, 500 etc) */
+                println!("Unexpected status Code {}", code)
+            }
+            Err(err) => {
+                /* some kind of io/transport error */
+                println!("Unexpected error {}", err)
+            }
+        }
     }
 }
 
