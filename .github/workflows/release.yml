@@ -21,15 +21,15 @@ jobs:
         include:
           - name: linux
             os: ubuntu-latest
-            artifact_name: target/release/lernsax-history
+            artifact_name: sync_server/target/release/lernsax-history
             asset_name: lernsax-history-linux
           - name: windows
             os: windows-latest
-            artifact_name: target/release/lernsax-history.exe
+            artifact_name: sync_server/target/release/lernsax-history.exe
             asset_name: lernsax-history-windows
           - name: macos
             os: macos-latest
-            artifact_name: target/release/lernsax-history
+            artifact_name: sync_server/target/release/lernsax-history
             asset_name: lernsax-history-macos
 
     steps:
