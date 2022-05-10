@@ -123,7 +123,7 @@ fn commit_file(path: &str, msg: &str) {
         };
         match ureq::get(url).call() {
             Ok(_response) => {
-                println!("Created APNS Notification")
+                //println!("Created APNS Notification")
             }
             Err(Error::Status(code, _response)) => {
                 /* the server returned an unexpected status

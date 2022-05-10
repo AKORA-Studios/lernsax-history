@@ -78,5 +78,5 @@ func sendPushNotification(text string) {
 		log.Fatal("Error:", err)
 	}
 
-	//fmt.Printf("%v %v %v\n", res.StatusCode, res.ApnsID, res.Reason)
+	fmt.Printf("%v %v %v\n", res.StatusCode, res.ApnsID, res.Reason)
 }
